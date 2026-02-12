@@ -1,0 +1,3 @@
+{
+  "extends": "@niche-e-invitation/config/tsconfig.base.json"
+}

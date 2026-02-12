@@ -1,0 +1,11 @@
+{
+  "extends": "@niche-e-invitation/config/tsconfig.base.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "composite": true
+  }
+}
