@@ -1,29 +1,31 @@
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function uploadToCloudinary(file: File, folder: string) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const formData = new FormData();
-    formData.append("file", `data:${file.type};base64,${buffer.toString("base64")}`);
-    formData.append("upload_preset", "ml_default");
-    formData.append("folder", folder);
-
-    const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
-        {
-            method: "POST",
-            body: formData,
-        }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.error?.message || "Cloudinary upload failed");
-    }
-
-    return {
-        url: data.secure_url,
-        publicId: data.public_id,
-    };
+    return new Promise<{ url: string; publicId: string }>((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+            {
+                folder: folder,
+                resource_type: "auto",
+            },
+            (error, result) => {
+                if (error || !result) {
+                    reject(error || new Error("Cloudinary upload failed"));
+                    return;
+                }
+                resolve({
+                    url: result.secure_url,
+                    publicId: result.public_id,
+                });
+            }
+        ).end(buffer);
+    });
 }

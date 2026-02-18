@@ -1,9 +1,9 @@
-import { auth } from "@niche-e-invitation/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getActiveSubscription } from "@/lib/services";
 import { db } from "@niche-e-invitation/db";
 import CreateEventForm from "./create-event-form";
+import { auth } from "@niche-e-invitation/auth/auth";
 
 export default async function CreateEventPage() {
     const session = await auth.api.getSession({

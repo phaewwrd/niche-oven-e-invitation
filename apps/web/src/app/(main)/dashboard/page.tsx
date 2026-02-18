@@ -1,4 +1,4 @@
-import { auth } from "@niche-e-invitation/auth";
+import { auth } from "@niche-e-invitation/auth/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 

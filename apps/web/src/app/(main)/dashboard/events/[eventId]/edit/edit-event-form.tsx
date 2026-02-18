@@ -5,30 +5,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { Plus, Trash2, Calendar as CalendarIcon, MapPin, Quote, Globe, Loader2, Sparkles, Image as ImageIcon, Camera } from "lucide-react";
-import { createEventAction } from "@/app/actions/event";
+import { useUpdateEvent } from "@/hooks/use-update-event";
 import { ImageUploadField } from "@/components/image-upload-field";
 
-export default function CreateEventForm({ userId, themes, subscription }: { userId: string, themes: any[], subscription: any }) {
-    const router = useRouter();
-    const [isSubmitting, setIsSubmitting] = useState(false);
+interface EditEventFormProps {
+    userId: string;
+    eventId: string;
+    initialData: any;
+    themes: any[];
+    subscription: any;
+}
+
+export default function EditEventForm({ userId, eventId, initialData, themes, subscription }: EditEventFormProps) {
     const isPaid = subscription?.plan?.name === 'paid';
     const maxSchedules = subscription?.plan?.maxSchedule || 4;
 
     const [formData, setFormData] = useState({
-        groomName: "",
-        brideName: "",
-        eventDate: "",
-        locationText: "",
-        googleMapsUrl: "",
-        quote: "",
-        slug: "",
-        themeId: themes[0]?.id || "",
-        image1Url: "",
-        image2Url: "",
-        schedules: [{ time: "", title: "" }]
+        groomName: initialData.groomName || "",
+        brideName: initialData.brideName || "",
+        eventDate: initialData.eventDate ? new Date(initialData.eventDate).toISOString().slice(0, 16) : "",
+        locationText: initialData.locationText || "",
+        googleMapsUrl: initialData.googleMapsUrl || "",
+        quote: initialData.quote || "",
+        themeId: initialData.themeId || themes[0]?.id || "",
+        image1Url: initialData.image1Url || "",
+        image2Url: initialData.image2Url || "",
+        schedules: initialData.schedules?.length > 0
+            ? initialData.schedules.map((s: any) => ({ time: s.time, title: s.title }))
+            : [{ time: "", title: "" }]
     });
+
+    const updateEvent = useUpdateEvent(eventId, userId);
 
     const addSchedule = () => {
         if (formData.schedules.length >= maxSchedules) {
@@ -39,7 +47,7 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
     };
 
     const removeSchedule = (index: number) => {
-        setFormData({ ...formData, schedules: formData.schedules.filter((_, i) => i !== index) });
+        setFormData({ ...formData, schedules: formData.schedules.filter((_: any, i: number) => i !== index) });
     };
 
     const updateSchedule = (index: number, field: string, value: string) => {
@@ -50,21 +58,7 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
-
-        try {
-            const result = await createEventAction(userId, formData);
-            if (result.success) {
-                toast.success("Event created successfully!");
-                router.push("/dashboard");
-            } else {
-                toast.error(result.error || "Failed to create event");
-            }
-        } catch (error) {
-            toast.error("An error occurred");
-        } finally {
-            setIsSubmitting(false);
-        }
+        updateEvent.mutate(formData);
     };
 
     return (
@@ -174,7 +168,7 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                 </div>
 
                 <div className="space-y-4">
-                    {formData.schedules.map((s, i) => (
+                    {formData.schedules.map((s: any, i: number) => (
                         <div key={i} className="flex gap-4 items-end animate-in fade-in slide-in-from-top-2">
                             <div className="flex-1 grid grid-cols-3 gap-4">
                                 <div className="space-y-1">
@@ -213,12 +207,12 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                     </div>
 
                     <div className="space-y-2">
-                        <Label className="flex items-center gap-2">Custom Slug {isPaid ? <span className="bg-indigo-100 text-indigo-700 text-[10px] px-2 py-0.5 rounded font-black uppercase">Paid</span> : null}</Label>
+                        <Label className="flex items-center gap-2">Custom Slug</Label>
                         <div className="relative">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium">niche-e.com/</span>
-                            <Input disabled={!isPaid} value={formData.slug} onChange={e => setFormData({ ...formData, slug: e.target.value })} placeholder={isPaid ? "your-name-wedding" : "auto-generated-slug"} className="py-6 pl-32 rounded-xl font-medium" />
+                            <Input disabled value={initialData.slug} className="py-6 pl-32 rounded-xl font-medium bg-gray-50 opacity-70" />
                         </div>
-                        <p className="text-xs text-gray-400 pl-2">Once created, the URL slug cannot be changed.</p>
+                        <p className="text-xs text-gray-400 pl-2">The URL slug is permanent and cannot be changed.</p>
                     </div>
                 </div>
             </section>
@@ -226,16 +220,16 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
             <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex gap-4">
                 <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={updateEvent.isPending}
                     className="flex-1 py-8 text-xl font-black rounded-2xl shadow-2xl shadow-primary/40 transform active:scale-[0.98] transition-all"
                 >
-                    {isSubmitting ? (
+                    {updateEvent.isPending ? (
                         <>
                             <Loader2 className="mr-3 h-6 w-6 animate-spin" />
-                            Creating Your Invitation...
+                            Updating Invitation...
                         </>
                     ) : (
-                        "Launch Invitation"
+                        "Save Changes"
                     )}
                 </Button>
             </div>

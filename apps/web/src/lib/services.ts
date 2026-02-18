@@ -1,5 +1,5 @@
 import { db } from "@niche-e-invitation/db";
-import { event, theme, schedule } from "@niche-e-invitation/db/schema";
+import { event, theme, schedule } from "@niche-e-invitation/db/schema/business";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
