@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { eventSchema, type EventSchema } from "@/schemas/event";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,48 +23,48 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
     const isPaid = subscription?.plan?.name === 'paid';
     const maxSchedules = subscription?.plan?.maxSchedule || 4;
 
-    const [formData, setFormData] = useState({
-        groomName: initialData.groomName || "",
-        brideName: initialData.brideName || "",
-        eventDate: initialData.eventDate ? new Date(initialData.eventDate).toISOString().slice(0, 16) : "",
-        locationText: initialData.locationText || "",
-        googleMapsUrl: initialData.googleMapsUrl || "",
-        quote: initialData.quote || "",
-        themeId: initialData.themeId || themes[0]?.id || "",
-        image1Url: initialData.image1Url || "",
-        image2Url: initialData.image2Url || "",
-        schedules: initialData.schedules?.length > 0
-            ? initialData.schedules.map((s: any) => ({ time: s.time, title: s.title }))
-            : [{ time: "", title: "" }]
+    const {
+        register,
+        control,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors },
+    } = useForm<EventSchema>({
+        resolver: zodResolver(eventSchema),
+        defaultValues: {
+            groomName: initialData.groomName || "",
+            brideName: initialData.brideName || "",
+            eventDate: initialData.eventDate ? new Date(initialData.eventDate).toISOString().slice(0, 16) : "",
+            locationText: initialData.locationText || "",
+            googleMapsUrl: initialData.googleMapsUrl || "",
+            quote: initialData.quote || "",
+            themeId: initialData.themeId || themes[0]?.id || "",
+            image1Url: initialData.image1Url || "",
+            image2Url: initialData.image2Url || "",
+            schedules: initialData.schedules?.length > 0
+                ? initialData.schedules.map((s: any) => ({ time: s.time, title: s.title }))
+                : [{ time: "", title: "" }]
+        }
+    });
+
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "schedules"
     });
 
     const updateEvent = useUpdateEvent(eventId, userId);
 
-    const addSchedule = () => {
-        if (formData.schedules.length >= maxSchedules) {
-            toast.error(`Your plan limit is ${maxSchedules} schedule items.`);
-            return;
-        }
-        setFormData({ ...formData, schedules: [...formData.schedules, { time: "", title: "" }] });
-    };
+    const selectedThemeId = watch("themeId");
+    const image1Url = watch("image1Url");
+    const image2Url = watch("image2Url");
 
-    const removeSchedule = (index: number) => {
-        setFormData({ ...formData, schedules: formData.schedules.filter((_: any, i: number) => i !== index) });
-    };
-
-    const updateSchedule = (index: number, field: string, value: string) => {
-        const newSchedules = [...formData.schedules];
-        newSchedules[index] = { ...newSchedules[index], [field]: value };
-        setFormData({ ...formData, schedules: newSchedules });
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        updateEvent.mutate(formData);
+    const onSubmit = (data: EventSchema) => {
+        updateEvent.mutate(data);
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-12 pb-32 animate-in fade-in duration-1000">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-12 pb-32 animate-in fade-in duration-1000">
             {/* Names Section */}
             <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
                 <div className="flex items-center gap-3 mb-2">
@@ -74,11 +76,13 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
                         <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">The Groom</Label>
-                        <Input required value={formData.groomName} onChange={e => setFormData({ ...formData, groomName: e.target.value })} placeholder="e.g. Johnathan Doe" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        <Input {...register("groomName")} placeholder="e.g. Johnathan Doe" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        {errors.groomName && <p className="text-destructive text-xs">{errors.groomName.message}</p>}
                     </div>
                     <div className="space-y-3">
                         <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">The Bride</Label>
-                        <Input required value={formData.brideName} onChange={e => setFormData({ ...formData, brideName: e.target.value })} placeholder="e.g. Arabella Smith" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        <Input {...register("brideName")} placeholder="e.g. Arabella Smith" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        {errors.brideName && <p className="text-destructive text-xs">{errors.brideName.message}</p>}
                     </div>
                 </div>
             </section>
@@ -94,11 +98,13 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
                         <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Magic Date & Time</Label>
-                        <Input required type="datetime-local" value={formData.eventDate} onChange={e => setFormData({ ...formData, eventDate: e.target.value })} className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        <Input type="datetime-local" {...register("eventDate")} className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        {errors.eventDate && <p className="text-destructive text-xs">{errors.eventDate.message}</p>}
                     </div>
                     <div className="space-y-3">
                         <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Venué Name</Label>
-                        <Input required value={formData.locationText} onChange={e => setFormData({ ...formData, locationText: e.target.value })} placeholder="e.g. The Glass House, Grand Hilton" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        <Input {...register("locationText")} placeholder="e.g. The Glass House, Grand Hilton" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        {errors.locationText && <p className="text-destructive text-xs">{errors.locationText.message}</p>}
                     </div>
                 </div>
 
@@ -107,7 +113,7 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                         <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Navigation Link <span className="bg-secondary/20 text-secondary text-[10px] px-2.5 py-1 rounded-full font-black">CURATED</span></Label>
                         <div className="relative">
                             <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary" />
-                            <Input value={formData.googleMapsUrl} onChange={e => setFormData({ ...formData, googleMapsUrl: e.target.value })} placeholder="Paste link from Google Maps" className="py-7 pl-14 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all" />
+                            <Input {...register("googleMapsUrl")} placeholder="Paste link from Google Maps" className="py-7 pl-14 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all" />
                         </div>
                     </div>
                 ) : (
@@ -128,13 +134,13 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <ImageUploadField
                         label="Portfolio Cover"
-                        value={formData.image1Url}
-                        onChange={(url) => setFormData({ ...formData, image1Url: url })}
+                        value={image1Url || ""}
+                        onChange={(url) => setValue("image1Url", url)}
                     />
                     <ImageUploadField
                         label="Atmospheric Portrait"
-                        value={formData.image2Url}
-                        onChange={(url) => setFormData({ ...formData, image2Url: url })}
+                        value={image2Url || ""}
+                        onChange={(url) => setValue("image2Url", url)}
                     />
                 </div>
             </section>
@@ -151,8 +157,8 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                     {themes.map(theme => (
                         <div
                             key={theme.id}
-                            onClick={() => setFormData({ ...formData, themeId: theme.id })}
-                            className={`group cursor-pointer rounded-3xl border-2 p-4 transition-all duration-500 ${formData.themeId === theme.id ? 'border-secondary bg-secondary/5 ring-4 ring-secondary/10 shadow-xl' : 'border-border hover:border-secondary/30 bg-white'}`}
+                            onClick={() => setValue("themeId", theme.id)}
+                            className={`group cursor-pointer rounded-3xl border-2 p-4 transition-all duration-500 ${selectedThemeId === theme.id ? 'border-secondary bg-secondary/5 ring-4 ring-secondary/10 shadow-xl' : 'border-border hover:border-secondary/30 bg-white'}`}
                         >
                             <div className="aspect-[4/5] bg-muted/30 rounded-2xl mb-4 flex items-center justify-center font-bold overflow-hidden shadow-inner">
                                 <div style={{ backgroundColor: theme.primaryColor }} className="w-full h-full opacity-40 transition-transform duration-700 group-hover:scale-110"></div>
@@ -172,26 +178,32 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                         </div>
                         <h2 className="text-2xl font-serif font-black italic">Itinerary Flow</h2>
                     </div>
-                    <Button type="button" variant="outline" size="sm" onClick={addSchedule} className="font-bold border-2 border-secondary/20 hover:bg-secondary/5 text-secondary px-6 rounded-xl h-12 transition-all">
+                    <Button type="button" variant="outline" size="sm" onClick={() => {
+                        if (fields.length < maxSchedules) {
+                            append({ time: "", title: "" });
+                        } else {
+                            toast.error(`Your plan limit is ${maxSchedules} schedule items.`);
+                        }
+                    }} className="font-bold border-2 border-secondary/20 hover:bg-secondary/5 text-secondary px-6 rounded-xl h-12 transition-all">
                         <Plus className="w-4 h-4 mr-2" /> Add Beat
                     </Button>
                 </div>
 
                 <div className="space-y-6">
-                    {formData.schedules.map((s: any, i: number) => (
-                        <div key={i} className="flex gap-6 items-end animate-in fade-in slide-in-from-top-2 group">
+                    {fields.map((field, i) => (
+                        <div key={field.id} className="flex gap-6 items-end animate-in fade-in slide-in-from-top-2 group">
                             <div className="flex-1 grid grid-cols-3 gap-6 bg-muted/20 p-6 rounded-2xl border border-border shadow-sm group-hover:border-secondary/20 transition-colors">
                                 <div className="space-y-2">
                                     <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Timestamp</Label>
-                                    <Input value={s.time} onChange={e => updateSchedule(i, 'time', e.target.value)} placeholder="09:00" className="rounded-xl bg-white/50 border-border py-6" />
+                                    <Input {...register(`schedules.${i}.time`)} placeholder="09:00" className="rounded-xl bg-white/50 border-border py-6" />
                                 </div>
                                 <div className="col-span-2 space-y-2">
                                     <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Activity Description</Label>
-                                    <Input value={s.title} onChange={e => updateSchedule(i, 'title', e.target.value)} placeholder="Wedding Ceremony & Reception" className="rounded-xl bg-white/50 border-border py-6" />
+                                    <Input {...register(`schedules.${i}.title`)} placeholder="Wedding Ceremony & Reception" className="rounded-xl bg-white/50 border-border py-6" />
                                 </div>
                             </div>
-                            {formData.schedules.length > 1 && (
-                                <button type="button" onClick={() => removeSchedule(i)} className="text-destructive/40 hover:text-destructive group p-3 hover:bg-destructive/5 rounded-full transition-all mb-4">
+                            {fields.length > 1 && (
+                                <button type="button" onClick={() => remove(i)} className="text-destructive/40 hover:text-destructive group p-3 hover:bg-destructive/5 rounded-full transition-all mb-4">
                                     <Trash2 className="w-5 h-5" />
                                 </button>
                             )}
@@ -214,7 +226,7 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                         <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Artistic Quote {isPaid ? <span className="bg-secondary/20 text-secondary text-[10px] px-2.5 py-1 rounded-full font-black">PREMIUM</span> : null}</Label>
                         <div className="relative">
                             <Quote className="absolute left-5 top-6 w-5 h-5 text-secondary opacity-30" />
-                            <Input disabled={!isPaid} value={formData.quote} onChange={e => setFormData({ ...formData, quote: e.target.value })} placeholder={isPaid ? "Describe your love story..." : "Standard theme quote (Premium only)"} className="py-14 pl-14 rounded-3xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-xl italic font-serif" />
+                            <Input disabled={!isPaid} {...register("quote")} placeholder={isPaid ? "Describe your love story..." : "Standard theme quote (Premium only)"} className="py-14 pl-14 rounded-3xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-xl italic font-serif" />
                         </div>
                     </div>
 

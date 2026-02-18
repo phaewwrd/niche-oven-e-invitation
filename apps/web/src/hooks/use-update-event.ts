@@ -9,11 +9,14 @@ export function useUpdateEvent(eventId: string, userId: string) {
 
     return useMutation({
         mutationFn: async (data: any) => {
-            const result = await updateEventAction(eventId, userId, data);
-            if (!result.success) {
-                throw new Error(result.error);
+            const result = await updateEventAction({ eventId, data });
+            if (result?.serverError) {
+                throw new Error(result.serverError);
             }
-            return result;
+            if (result?.validationErrors) {
+                throw new Error("Validation failed");
+            }
+            return result?.data;
         },
         onSuccess: () => {
             toast.success("Event updated successfully!");
