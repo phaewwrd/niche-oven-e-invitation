@@ -68,71 +68,77 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-12 pb-20">
+        <form onSubmit={handleSubmit} className="space-y-12 pb-32 animate-in fade-in duration-1000">
             {/* Names Section */}
-            <section className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-indigo-100 p-2 rounded-lg text-indigo-600"><Sparkles className="w-5 h-5" /></div>
-                    <h2 className="text-xl font-bold">Couple Information</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <Label>Groom's Name</Label>
-                        <Input required value={formData.groomName} onChange={e => setFormData({ ...formData, groomName: e.target.value })} placeholder="e.g. John Doe" className="py-6 rounded-xl" />
+                    <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
+                        <Sparkles className="w-5 h-5" />
                     </div>
-                    <div className="space-y-2">
-                        <Label>Bride's Name</Label>
-                        <Input required value={formData.brideName} onChange={e => setFormData({ ...formData, brideName: e.target.value })} placeholder="e.g. Jane Smith" className="py-6 rounded-xl" />
+                    <h2 className="text-2xl font-serif font-black italic">Couple Identity</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">The Groom</Label>
+                        <Input required value={formData.groomName} onChange={e => setFormData({ ...formData, groomName: e.target.value })} placeholder="e.g. Johnathan Doe" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                    </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">The Bride</Label>
+                        <Input required value={formData.brideName} onChange={e => setFormData({ ...formData, brideName: e.target.value })} placeholder="e.g. Arabella Smith" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
                     </div>
                 </div>
             </section>
 
             {/* Date & Location */}
-            <section className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-rose-100 p-2 rounded-lg text-rose-600"><CalendarIcon className="w-5 h-5" /></div>
-                    <h2 className="text-xl font-bold">Event Details</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <Label>Event Date</Label>
-                        <Input required type="datetime-local" value={formData.eventDate} onChange={e => setFormData({ ...formData, eventDate: e.target.value })} className="py-6 rounded-xl" />
+                    <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
+                        <CalendarIcon className="w-5 h-5" />
                     </div>
-                    <div className="space-y-2">
-                        <Label>Location Name</Label>
-                        <Input required value={formData.locationText} onChange={e => setFormData({ ...formData, locationText: e.target.value })} placeholder="e.g. Grand Ballroom, Hilton Hotel" className="py-6 rounded-xl" />
+                    <h2 className="text-2xl font-serif font-black italic">Event Logistics</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Magic Date & Time</Label>
+                        <Input required type="datetime-local" value={formData.eventDate} onChange={e => setFormData({ ...formData, eventDate: e.target.value })} className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                    </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Venué Name</Label>
+                        <Input required value={formData.locationText} onChange={e => setFormData({ ...formData, locationText: e.target.value })} placeholder="e.g. The Glass House, Grand Hilton" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
                     </div>
                 </div>
 
                 {isPaid ? (
-                    <div className="space-y-2">
-                        <Label className="flex items-center gap-2">Google Maps URL <span className="bg-indigo-100 text-indigo-700 text-[10px] px-2 py-0.5 rounded font-black uppercase">Paid</span></Label>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Navigation Link <span className="bg-secondary/20 text-secondary text-[10px] px-2.5 py-1 rounded-full font-black">CURATED</span></Label>
                         <div className="relative">
-                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                            <Input value={formData.googleMapsUrl} onChange={e => setFormData({ ...formData, googleMapsUrl: e.target.value })} placeholder="Paste link from Google Maps" className="py-6 pl-12 rounded-xl" />
+                            <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary" />
+                            <Input value={formData.googleMapsUrl} onChange={e => setFormData({ ...formData, googleMapsUrl: e.target.value })} placeholder="Paste link from Google Maps" className="py-7 pl-14 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all" />
                         </div>
                     </div>
                 ) : (
-                    <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-sm text-gray-500 flex items-center gap-3">
-                        <MapPin className="w-5 h-5" /> Upgrade to Paid Plan to add Google Maps integration.
+                    <div className="p-6 bg-muted/30 rounded-2xl border border-border text-xs font-medium text-muted-foreground flex items-center gap-4 italic">
+                        <div className="bg-white p-2 rounded-lg shadow-sm"><MapPin className="w-4 h-4 text-gray-300" /></div> Upgrade to a curated plan to unlock architectural Google Maps integration.
                     </div>
                 )}
             </section>
 
             {/* Image Gallery */}
-            <section className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600"><Camera className="w-5 h-5" /></div>
-                    <h2 className="text-xl font-bold">Image Gallery</h2>
+                    <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
+                        <Camera className="w-5 h-5" />
+                    </div>
+                    <h2 className="text-2xl font-serif font-black italic">Visual Gallery</h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <ImageUploadField
-                        label="Primary Cover Photo"
+                        label="Portfolio Cover"
                         value={formData.image1Url}
                         onChange={(url) => setFormData({ ...formData, image1Url: url })}
                     />
                     <ImageUploadField
-                        label="Secondary Photo"
+                        label="Atmospheric Portrait"
                         value={formData.image2Url}
                         onChange={(url) => setFormData({ ...formData, image2Url: url })}
                     />
@@ -140,56 +146,60 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
             </section>
 
             {/* Theme Selection */}
-            <section className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-amber-100 p-2 rounded-lg text-amber-600"><ImageIcon className="w-5 h-5" /></div>
-                    <h2 className="text-xl font-bold">Theme Style</h2>
+                    <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
+                        <ImageIcon className="w-5 h-5" />
+                    </div>
+                    <h2 className="text-2xl font-serif font-black italic">Aesthetic Theme</h2>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                     {themes.map(theme => (
                         <div
                             key={theme.id}
                             onClick={() => setFormData({ ...formData, themeId: theme.id })}
-                            className={`cursor-pointer rounded-xl border-2 p-3 transition-all ${formData.themeId === theme.id ? 'border-primary bg-primary/5' : 'border-gray-100 hover:border-gray-200'}`}
+                            className={`group cursor-pointer rounded-3xl border-2 p-4 transition-all duration-500 ${formData.themeId === theme.id ? 'border-secondary bg-secondary/5 ring-4 ring-secondary/10 shadow-xl' : 'border-border hover:border-secondary/30 bg-white'}`}
                         >
-                            <div className="aspect-[4/5] bg-gray-100 rounded-lg mb-2 flex items-center justify-center text-gray-300 font-bold overflow-hidden">
-                                <div style={{ backgroundColor: theme.primaryColor }} className="w-full h-full opacity-20"></div>
+                            <div className="aspect-[4/5] bg-muted/30 rounded-2xl mb-4 flex items-center justify-center font-bold overflow-hidden shadow-inner">
+                                <div style={{ backgroundColor: theme.primaryColor }} className="w-full h-full opacity-40 transition-transform duration-700 group-hover:scale-110"></div>
                             </div>
-                            <p className="text-center font-bold text-sm truncate">{theme.title}</p>
+                            <p className="text-center font-black uppercase tracking-widest text-[10px] text-primary truncate">{theme.title}</p>
                         </div>
                     ))}
                 </div>
             </section>
 
             {/* Schedule Section */}
-            <section className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                        <div className="bg-blue-100 p-2 rounded-lg text-blue-600"><CalendarIcon className="w-5 h-5" /></div>
-                        <h2 className="text-xl font-bold">Itinerary</h2>
+                        <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
+                            <CalendarIcon className="w-5 h-5" />
+                        </div>
+                        <h2 className="text-2xl font-serif font-black italic">Itinerary Flow</h2>
                     </div>
-                    <Button type="button" variant="outline" size="sm" onClick={addSchedule} className="font-bold border-2">
-                        <Plus className="w-4 h-4 mr-2" /> Add Item
+                    <Button type="button" variant="outline" size="sm" onClick={addSchedule} className="font-bold border-2 border-secondary/20 hover:bg-secondary/5 text-secondary px-6 rounded-xl h-12 transition-all">
+                        <Plus className="w-4 h-4 mr-2" /> Add Beat
                     </Button>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                     {formData.schedules.map((s, i) => (
-                        <div key={i} className="flex gap-4 items-end animate-in fade-in slide-in-from-top-2">
-                            <div className="flex-1 grid grid-cols-3 gap-4">
-                                <div className="space-y-1">
-                                    <Label className="text-xs">Time</Label>
-                                    <Input value={s.time} onChange={e => updateSchedule(i, 'time', e.target.value)} placeholder="09:00" className="rounded-lg" />
+                        <div key={i} className="flex gap-6 items-end animate-in fade-in slide-in-from-top-2 group">
+                            <div className="flex-1 grid grid-cols-3 gap-6 bg-muted/20 p-6 rounded-2xl border border-border shadow-sm group-hover:border-secondary/20 transition-colors">
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Timestamp</Label>
+                                    <Input value={s.time} onChange={e => updateSchedule(i, 'time', e.target.value)} placeholder="09:00" className="rounded-xl bg-white/50 border-border py-6" />
                                 </div>
-                                <div className="col-span-2 space-y-1">
-                                    <Label className="text-xs">Activity</Label>
-                                    <Input value={s.title} onChange={e => updateSchedule(i, 'title', e.target.value)} placeholder="Wedding Ceremony" className="rounded-lg" />
+                                <div className="col-span-2 space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Activity Description</Label>
+                                    <Input value={s.title} onChange={e => updateSchedule(i, 'title', e.target.value)} placeholder="Wedding Ceremony & Reception" className="rounded-xl bg-white/50 border-border py-6" />
                                 </div>
                             </div>
                             {formData.schedules.length > 1 && (
-                                <Button type="button" variant="ghost" size="icon" onClick={() => removeSchedule(i)} className="text-red-500 hover:text-red-700 hover:bg-red-50 mb-0.5">
-                                    <Trash2 className="w-4 h-4" />
-                                </Button>
+                                <button type="button" onClick={() => removeSchedule(i)} className="text-destructive/40 hover:text-destructive group p-3 hover:bg-destructive/5 rounded-full transition-all mb-4">
+                                    <Trash2 className="w-5 h-5" />
+                                </button>
                             )}
                         </div>
                     ))}
@@ -197,45 +207,47 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
             </section>
 
             {/* Advanced Section */}
-            <section className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-purple-100 p-2 rounded-lg text-purple-600"><Globe className="w-5 h-5" /></div>
-                    <h2 className="text-xl font-bold">Advanced Settings</h2>
+                    <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
+                        <Globe className="w-5 h-5" />
+                    </div>
+                    <h2 className="text-2xl font-serif font-black italic">Curated Settings</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-2">
-                        <Label className="flex items-center gap-2">Quote {isPaid ? <span className="bg-indigo-100 text-indigo-700 text-[10px] px-2 py-0.5 rounded font-black uppercase">Paid</span> : null}</Label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Artistic Quote {isPaid ? <span className="bg-secondary/20 text-secondary text-[10px] px-2.5 py-1 rounded-full font-black">PREMIUM</span> : null}</Label>
                         <div className="relative">
-                            <Quote className="absolute left-4 top-4 w-4 h-4 text-gray-400" />
-                            <Input disabled={!isPaid} value={formData.quote} onChange={e => setFormData({ ...formData, quote: e.target.value })} placeholder={isPaid ? "Shared love quote..." : "Standard theme quote (Paid only)"} className="py-12 pl-12 rounded-xl text-lg italic" />
+                            <Quote className="absolute left-5 top-6 w-5 h-5 text-secondary opacity-30" />
+                            <Input disabled={!isPaid} value={formData.quote} onChange={e => setFormData({ ...formData, quote: e.target.value })} placeholder={isPaid ? "Describe your love story..." : "Standard theme quote (Premium only)"} className="py-14 pl-14 rounded-3xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-xl italic font-serif" />
                         </div>
                     </div>
 
-                    <div className="space-y-2">
-                        <Label className="flex items-center gap-2">Custom Slug {isPaid ? <span className="bg-indigo-100 text-indigo-700 text-[10px] px-2 py-0.5 rounded font-black uppercase">Paid</span> : null}</Label>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Signature URL {isPaid ? <span className="bg-secondary/20 text-secondary text-[10px] px-2.5 py-1 rounded-full font-black">PREMIUM</span> : null}</Label>
                         <div className="relative">
-                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium">niche-e.com/</span>
-                            <Input disabled={!isPaid} value={formData.slug} onChange={e => setFormData({ ...formData, slug: e.target.value })} placeholder={isPaid ? "your-name-wedding" : "auto-generated-slug"} className="py-6 pl-32 rounded-xl font-medium" />
+                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground font-black text-sm lowercase italic opacity-50">niche-e.com/</span>
+                            <Input disabled={!isPaid} value={formData.slug} onChange={e => setFormData({ ...formData, slug: e.target.value })} placeholder={isPaid ? "yourname-wedding" : "auto-generated-slug"} className="py-7 pl-36 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all font-black text-primary" />
                         </div>
-                        <p className="text-xs text-gray-400 pl-2">Once created, the URL slug cannot be changed.</p>
+                        <p className="text-[10px] text-muted-foreground pl-2 italic">Once finalized, the signature URL becomes permanent.</p>
                     </div>
                 </div>
             </section>
 
-            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex gap-4">
+            <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-full max-w-4xl px-8 flex gap-4 z-50">
                 <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 py-8 text-xl font-black rounded-2xl shadow-2xl shadow-primary/40 transform active:scale-[0.98] transition-all"
+                    className="flex-1 py-10 text-2xl font-black rounded-[2rem] bg-primary text-primary-foreground shadow-2xl shadow-primary/20 transform active:scale-[0.98] hover:brightness-110 transition-all border-4 border-white"
                 >
                     {isSubmitting ? (
                         <>
-                            <Loader2 className="mr-3 h-6 w-6 animate-spin" />
-                            Creating Your Invitation...
+                            <Loader2 className="mr-4 h-8 w-8 animate-spin text-secondary" />
+                            Architecting Invitation...
                         </>
                     ) : (
-                        "Launch Invitation"
+                        "Publish Collection"
                     )}
                 </Button>
             </div>

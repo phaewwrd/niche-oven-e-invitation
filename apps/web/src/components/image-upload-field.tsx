@@ -48,24 +48,24 @@ export function ImageUploadField({ label, value, onChange, folder = "events" }: 
     };
 
     return (
-        <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">{label}</label>
+        <div className="space-y-3">
+            <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{label}</label>
             <div className="relative group">
                 {value ? (
-                    <div className="relative aspect-video rounded-xl overflow-hidden border-2 border-gray-100 bg-gray-50">
+                    <div className="relative aspect-video rounded-3xl overflow-hidden border-2 border-border bg-muted/30 shadow-inner">
                         <Image
                             src={value}
                             alt={label}
                             fill
-                            className="object-cover"
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <div className="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px] flex items-center justify-center">
                             <Button
                                 type="button"
                                 variant="destructive"
                                 size="sm"
                                 onClick={() => onChange("")}
-                                className="rounded-full w-10 h-10 p-0"
+                                className="rounded-full w-12 h-12 p-0 shadow-2xl transform scale-90 group-hover:scale-100 transition-transform"
                             >
                                 <X className="w-5 h-5" />
                             </Button>
@@ -73,22 +73,24 @@ export function ImageUploadField({ label, value, onChange, folder = "events" }: 
                     </div>
                 ) : (
                     <label className={`
-                        flex flex-col items-center justify-center aspect-video rounded-xl border-2 border-dashed 
-                        transition-all cursor-pointer
-                        ${isUploading ? 'bg-gray-50 border-gray-200' : 'bg-gray-50 border-gray-200 hover:border-primary/50 hover:bg-primary/5'}
+                        flex flex-col items-center justify-center aspect-video rounded-3xl border-2 border-dashed 
+                        transition-all duration-500 cursor-pointer
+                        ${isUploading ? 'bg-muted/50 border-border animate-pulse' : 'bg-muted/30 border-border hover:border-secondary/50 hover:bg-secondary/5 shadow-sm hover:shadow-md'}
                     `}>
                         {isUploading ? (
-                            <div className="flex flex-col items-center gap-2 text-primary">
-                                <Loader2 className="w-8 h-8 animate-spin" />
-                                <span className="text-sm font-bold">Uploading...</span>
+                            <div className="flex flex-col items-center gap-3 text-secondary">
+                                <Loader2 className="w-10 h-10 animate-spin" />
+                                <span className="text-xs font-black uppercase tracking-widest italic">Archiving...</span>
                             </div>
                         ) : (
-                            <div className="flex flex-col items-center gap-2 text-gray-400">
-                                <div className="bg-white p-3 rounded-full shadow-sm">
-                                    <Upload className="w-6 h-6" />
+                            <div className="flex flex-col items-center gap-4 text-muted-foreground group/upload">
+                                <div className="bg-white p-4 rounded-2xl shadow-xl shadow-primary/5 group-hover/upload:scale-110 transition-transform duration-500">
+                                    <Upload className="w-6 h-6 text-secondary" />
                                 </div>
-                                <span className="text-sm font-bold">Upload Photo</span>
-                                <span className="text-xs">JPG, PNG up to 5MB</span>
+                                <div className="text-center">
+                                    <span className="block text-sm font-black uppercase tracking-widest text-primary">Upload Aesthetic</span>
+                                    <span className="text-[10px] font-medium opacity-60">RAW, JPG, PNG up to 5MB</span>
+                                </div>
                             </div>
                         )}
                         <input

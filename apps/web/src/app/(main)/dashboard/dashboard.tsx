@@ -1,6 +1,6 @@
 "use client";
 import type { authClient } from "@/lib/auth-client";
-import type { Event, UserSubscription } from "@niche-e-invitation/db/schema";
+import type { Event, UserSubscription } from "@niche-e-invitation/db/schema/business";
 import { PlusCircle, ExternalLink, Calendar, Edit3 } from "lucide-react";
 
 interface DashboardProps {
@@ -17,7 +17,7 @@ export default function Dashboard({ session, events, subscription }: DashboardPr
           <PlusCircle className="w-12 h-12 text-gray-400 mb-4" />
           <h3 className="text-xl font-semibold mb-2">No invitations yet</h3>
           <p className="text-gray-500 mb-6">Start by creating your first digital wedding invitation.</p>
-          <a href="/dashboard/events/new" className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all flex items-center gap-2">
+          <a href="/dashboard/events/new" className="bg-primary text-primary-foreground px-8 py-3.5 rounded-2xl font-bold shadow-xl shadow-primary/10 hover:brightness-110 transition-all flex items-center gap-2 active:scale-95">
             <PlusCircle className="w-5 h-5" />
             Create Now
           </a>
@@ -46,9 +46,9 @@ export default function Dashboard({ session, events, subscription }: DashboardPr
                   {new Date(event.eventDate).toLocaleDateString()}
                 </div>
                 <div className="flex gap-2">
-                  <a href={`/dashboard/events/${event.id}/edit`} className="flex-1 flex items-center justify-center gap-2 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm font-medium transition-colors border border-gray-200">
+                  <a href={`/dashboard/events/${event.id}/edit`} className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-secondary/10 hover:bg-secondary/20 rounded-xl text-xs font-bold uppercase tracking-wider text-secondary transition-all border border-secondary/20">
                     <Edit3 className="w-4 h-4" />
-                    Edit
+                    Refine Invitation
                   </a>
                 </div>
               </div>

@@ -84,3 +84,11 @@ export const payment = pgTable("payment", {
     createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 export type Payment = typeof payment.$inferSelect;
+
+// Site Settings
+export const siteConfig = pgTable("site_config", {
+    key: text("key").primaryKey(), // e.g., 'hero_image_url'
+    value: text("value").notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+});
+export type SiteConfig = typeof siteConfig.$inferSelect;

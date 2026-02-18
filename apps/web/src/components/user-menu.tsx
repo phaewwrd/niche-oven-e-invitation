@@ -26,23 +26,25 @@ export default function UserMenu() {
   if (!session) {
     return (
       <Link href="/login">
-        <Button variant="outline">Sign In</Button>
+        <Button className="bg-primary hover:brightness-110 text-primary-foreground font-bold px-6 rounded-xl transition-all shadow-lg shadow-primary/10">Sign In</Button>
       </Link>
     );
   }
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" />}>
+      <DropdownMenuTrigger render={<Button variant="outline" className="border-border rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-secondary/5 h-10 px-4" />}>
         {session.user.name}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-card">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
+      <DropdownMenuContent className="bg-white/80 backdrop-blur-xl border border-border rounded-2xl p-2 shadow-2xl shadow-primary/5 min-w-[200px]">
+        <DropdownMenuGroup className="space-y-1">
+          <DropdownMenuLabel className="px-3 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground">The Profile</DropdownMenuLabel>
+          <DropdownMenuSeparator className="bg-border/50" />
+          <div className="px-3 py-2 text-xs font-medium text-primary/70 italic truncate">
+            {session.user.email}
+          </div>
           <DropdownMenuItem
-            variant="destructive"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest text-destructive hover:bg-destructive/5 transition-all cursor-pointer"
             onClick={() => {
               authClient.signOut({
                 fetchOptions: {

@@ -1,33 +1,40 @@
 "use client";
 import Link from "next/link";
-
 import { ModeToggle } from "./mode-toggle";
 import UserMenu from "./user-menu";
+import { Sparkles } from "lucide-react";
 
 export default function Header() {
-  const links = [
-    { to: "/", label: "Home" },
-    { to: "/dashboard", label: "Dashboard" },
-  ] as const;
-
   return (
-    <div>
-      <div className="flex flex-row items-center justify-between px-2 py-1">
-        <nav className="flex gap-4 text-lg">
-          {links.map(({ to, label }) => {
-            return (
-              <Link key={to} href={to}>
-                {label}
-              </Link>
-            );
-          })}
-        </nav>
-        <div className="flex items-center gap-2">
-          <ModeToggle />
-          <UserMenu />
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/80 border-b border-border">
+      <div className="container mx-auto flex h-20 items-center justify-between px-6">
+        <Link href="/" className="flex items-center gap-2 group transition-all">
+          <div className="bg-secondary p-1.5 rounded-lg shadow-lg shadow-secondary/20">
+            <Sparkles className="w-5 h-5 text-primary" />
+          </div>
+          <span className="text-2xl font-serif font-black tracking-tighter italic">
+            NICHE <span className="text-secondary">E</span>
+          </span>
+        </Link>
+
+        <div className="flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="/" className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+              Home
+            </Link>
+            <Link href="/dashboard" className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+              Dashboard
+            </Link>
+          </nav>
+
+          <div className="h-6 w-px bg-border mx-2" />
+
+          <div className="flex items-center gap-4">
+            <ModeToggle />
+            <UserMenu />
+          </div>
         </div>
       </div>
-      <hr />
-    </div>
+    </header>
   );
 }
