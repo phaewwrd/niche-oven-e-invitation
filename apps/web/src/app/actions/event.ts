@@ -11,7 +11,7 @@ export const createEventAction = authActionClient
     .action(async ({ parsedInput: input, ctx }) => {
         try {
             const result = await createEventService(ctx.userId, input);
-            revalidatePath("/dashboard");
+            revalidatePath("/manage");
             return { success: true, id: result.id, slug: result.slug };
         } catch (error: any) {
             console.error("Event creation error:", error);
@@ -27,8 +27,8 @@ export const updateEventAction = authActionClient
     .action(async ({ parsedInput: input, ctx }) => {
         try {
             const result = await updateEventService(input.eventId, ctx.userId, input.data);
-            revalidatePath("/dashboard");
-            revalidatePath(`/dashboard/events/${input.eventId}/edit`);
+            revalidatePath("/manage");
+            revalidatePath(`/manage/events/${input.eventId}/edit`);
             return { success: true, id: result.id, slug: result.slug };
         } catch (error: any) {
             console.error("Event update error:", error);

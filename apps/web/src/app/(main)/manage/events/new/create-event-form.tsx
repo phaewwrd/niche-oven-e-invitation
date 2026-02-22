@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { Plus, Trash2, Calendar as CalendarIcon, MapPin, Quote, Globe, Loader2, Sparkles, Image as ImageIcon, Camera } from "lucide-react";
 import { createEventAction } from "@/app/actions/event";
 import { ImageUploadField } from "@/components/image-upload-field";
+import { ColorPaletteField } from "@/components/color-palette-field";
 
 export default function CreateEventForm({ userId, themes, subscription }: { userId: string, themes: any[], subscription: any }) {
     const router = useRouter();
@@ -37,6 +38,7 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
             themeId: themes[0]?.id || "",
             image1Url: "",
             image2Url: "",
+            dressCodeColors: [],
             schedules: [{ time: "", title: "" }]
         }
     });
@@ -54,14 +56,14 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
         try {
             const result = await createEventAction(data);
 
-            if (result?.data?.success) {
+            if (result?.data?.success && result.data.slug) {
                 toast.success("Event created successfully!");
-                router.push("/dashboard");
+                router.push(`/invitation/${result.data.slug}`);
             } else {
                 toast.error(result?.serverError || "Failed to create event");
             }
         } catch (error) {
-            toast.error("An architecture error occurred");
+            toast.error("An error occurred while creating the event");
         }
     };
 
@@ -146,6 +148,14 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                     />
                 </div>
             </section>
+
+            {/* Dress Code Section */}
+            <ColorPaletteField
+                colors={watch("dressCodeColors") || []}
+                onChange={(colors) => setValue("dressCodeColors", colors)}
+                maxColors={subscription?.plan?.maxDressCodeColors || 3}
+                isPaid={isPaid}
+            />
 
             {/* Theme Selection */}
             <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
@@ -252,10 +262,10 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                     {isSubmitting ? (
                         <>
                             <Loader2 className="mr-4 h-8 w-8 animate-spin text-secondary" />
-                            Architecting Invitation...
+                            Creating your memorable invitation...
                         </>
                     ) : (
-                        "Publish Collection"
+                        "Create your memorable invitation"
                     )}
                 </Button>
             </div>

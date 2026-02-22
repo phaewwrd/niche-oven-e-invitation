@@ -1,4 +1,3 @@
-import { eventRepository } from "@/repositories/event-repository";
 import { subscriptionRepository } from "@/repositories/subscription-repository";
 import { themeRepository } from "@/repositories/theme-repository";
 import { db } from "@niche-e-invitation/db";
@@ -18,12 +17,9 @@ export async function getInvitationBySlug(slug: string) {
         return null;
     }
 
-    // Check if expired
-    if (new Date() > new Date(result.expiresAt)) {
-        return null; // Should return 404 in page
-    }
+    const isExpired = new Date() > new Date(result.expiresAt);
 
-    return result;
+    return { ...result, isExpired };
 }
 
 export async function getActiveSubscription(userId: string) {

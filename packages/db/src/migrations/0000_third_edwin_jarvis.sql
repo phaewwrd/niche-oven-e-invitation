@@ -60,6 +60,7 @@ CREATE TABLE "event" (
 	"location_text" text,
 	"google_maps_url" text,
 	"quote" text,
+	"dress_code_colors" text[],
 	"slug" text NOT NULL,
 	"expires_at" timestamp NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
@@ -85,7 +86,8 @@ CREATE TABLE "plan" (
 	"max_schedule" integer DEFAULT 4 NOT NULL,
 	"allow_slug" boolean NOT NULL,
 	"allow_quote" boolean NOT NULL,
-	"allow_maps" boolean NOT NULL
+	"allow_maps" boolean NOT NULL,
+	"max_dress_code_colors" integer DEFAULT 3 NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "schedule" (
@@ -96,9 +98,16 @@ CREATE TABLE "schedule" (
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "site_config" (
+	"key" text PRIMARY KEY NOT NULL,
+	"value" text NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "theme" (
 	"id" text PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
+	"slug" text DEFAULT 'classic' NOT NULL,
 	"primary_color" text NOT NULL,
 	"secondary_color" text NOT NULL,
 	"accent_color" text NOT NULL,
@@ -109,7 +118,8 @@ CREATE TABLE "theme" (
 	"show_quote" boolean DEFAULT true NOT NULL,
 	"show_image1" boolean DEFAULT true NOT NULL,
 	"show_image2" boolean DEFAULT true NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "theme_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE "user_subscription" (

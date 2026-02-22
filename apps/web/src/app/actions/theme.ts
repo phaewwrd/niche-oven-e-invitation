@@ -21,6 +21,7 @@ export async function createThemeAction(data: any) {
         await db.insert(theme).values({
             id: themeId,
             title: data.title,
+            slug: data.slug || data.title.toLowerCase().replace(/\s+/g, '-'),
             primaryColor: data.primaryColor,
             secondaryColor: data.secondaryColor,
             accentColor: data.accentColor,
@@ -34,7 +35,7 @@ export async function createThemeAction(data: any) {
         });
 
         revalidatePath("/admin/themes");
-        revalidatePath("/dashboard/events/new");
+        revalidatePath("/manage/events/new");
         return { success: true, id: themeId };
     } catch (error: any) {
         console.error("Theme creation error:", error);

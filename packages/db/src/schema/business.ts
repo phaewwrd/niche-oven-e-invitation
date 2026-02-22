@@ -12,6 +12,7 @@ export const plan = pgTable("plan", {
     allowSlug: boolean("allow_slug").notNull(),
     allowQuote: boolean("allow_quote").notNull(),
     allowMaps: boolean("allow_maps").notNull(),
+    maxDressCodeColors: integer("max_dress_code_colors").default(3).notNull(),
 });
 export type Plan = typeof plan.$inferSelect;
 
@@ -29,6 +30,7 @@ export type UserSubscription = typeof userSubscription.$inferSelect;
 export const theme = pgTable("theme", {
     id: text("id").primaryKey(),
     title: text("title").notNull(),
+    slug: text("slug").unique().notNull().default("classic"),
     primaryColor: text("primary_color").notNull(),
     secondaryColor: text("secondary_color").notNull(),
     accentColor: text("accent_color").notNull(),
@@ -57,6 +59,7 @@ export const event = pgTable("event", {
     locationText: text("location_text"),
     googleMapsUrl: text("google_maps_url"),
     quote: text("quote"),
+    dressCodeColors: text("dress_code_colors").array(),
     slug: text("slug").unique().notNull(),
     expiresAt: timestamp("expires_at").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),

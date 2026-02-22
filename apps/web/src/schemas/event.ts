@@ -7,10 +7,11 @@ export const eventSchema = z.object({
     locationText: z.string().min(1, "Location is required"),
     googleMapsUrl: z.string().url("Invalid Google Maps URL").optional().or(z.literal("")),
     quote: z.string().optional().or(z.literal("")),
-    slug: z.string().min(3, "Slug must be at least 3 characters").optional(),
+    slug: z.string().optional().or(z.literal("")),
     themeId: z.string().min(1, "Theme is required"),
     image1Url: z.string().optional().or(z.literal("")),
     image2Url: z.string().optional().or(z.literal("")),
+    dressCodeColors: z.array(z.string()),
     schedules: z.array(z.object({
         time: z.string().min(1, "Time is required"),
         title: z.string().min(1, "Activity is required"),

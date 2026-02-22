@@ -8,6 +8,7 @@ export async function createEventService(userId: string, data: any) {
         name: 'free',
         maxEvents: 1,
         maxSchedule: 4,
+        maxDressCodeColors: 3,
         allowSlug: false,
         allowQuote: false,
         allowMaps: false
@@ -23,6 +24,12 @@ export async function createEventService(userId: string, data: any) {
     // 3. Validate schedule count
     if (data.schedules.length > (currentPlan as any).maxSchedule) {
         throw new Error(`You can only have up to ${(currentPlan as any).maxSchedule} schedule items on your current plan.`);
+    }
+
+    // 3.5 Validate dress code colors
+    const maxDressColors = (currentPlan as any).maxDressCodeColors || 3;
+    if (data.dressCodeColors?.length > maxDressColors && currentPlan.name === 'free') {
+        throw new Error(`Free plan is limited to ${maxDressColors} dress code colors.`);
     }
 
     // 4. Validate plan features & Generate Slug
@@ -62,6 +69,7 @@ export async function createEventService(userId: string, data: any) {
         locationText: data.locationText,
         googleMapsUrl: finalMapsUrl,
         quote: finalQuote,
+        dressCodeColors: data.dressCodeColors,
         slug: finalSlug,
         expiresAt,
     }, data.schedules.map((s: any, index: number) => ({
@@ -84,6 +92,7 @@ export async function updateEventService(eventId: string, userId: string, data: 
         name: 'free',
         maxEvents: 1,
         maxSchedule: 4,
+        maxDressCodeColors: 3,
         allowSlug: false,
         allowQuote: false,
         allowMaps: false
@@ -99,6 +108,12 @@ export async function updateEventService(eventId: string, userId: string, data: 
     // 3. Validate schedule count
     if (data.schedules.length > (currentPlan as any).maxSchedule) {
         throw new Error(`You can only have up to ${(currentPlan as any).maxSchedule} schedule items on your current plan.`);
+    }
+
+    // 3.5 Validate dress code colors
+    const maxDressColors = (currentPlan as any).maxDressCodeColors || 3;
+    if (data.dressCodeColors?.length > maxDressColors && currentPlan.name === 'free') {
+        throw new Error(`Free plan is limited to ${maxDressColors} dress code colors.`);
     }
 
     // 4. Validate plan features
@@ -119,6 +134,7 @@ export async function updateEventService(eventId: string, userId: string, data: 
         locationText: data.locationText,
         googleMapsUrl: finalMapsUrl,
         quote: finalQuote,
+        dressCodeColors: data.dressCodeColors,
     }, data.schedules.map((s: any, index: number) => ({
         id: `sch_${eventId}_${Date.now()}_${index}`,
         time: s.time,

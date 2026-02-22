@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Upload, CheckCircle2, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { submitPayment } from "@/app/actions/payment";
+import { getCloudinarySignature } from "@/app/actions/upload";
 
 export default function UpgradeForm({ userId, amount }: { userId: string; amount: number }) {
     const [file, setFile] = useState<File | null>(null);
@@ -36,24 +37,46 @@ export default function UpgradeForm({ userId, amount }: { userId: string; amount
         setIsUploading(true);
 
         try {
-            // Use FormData to send file to server action
+            // 1. Get signature for payment-slips folder
+            const { signature, timestamp, cloudName, apiKey } = await getCloudinarySignature("payment-slips");
+
+            // 2. Upload directly to Cloudinary
             const formData = new FormData();
             formData.append("file", file);
-            formData.append("amount", amount.toString());
-            formData.append("userId", userId);
+            formData.append("folder", "payment-slips");
+            formData.append("timestamp", timestamp.toString());
+            formData.append("api_key", apiKey);
+            formData.append("signature", signature);
 
-            const result = await submitPayment(formData);
+            const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+            const uploadResponse = await fetch(url, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!uploadResponse.ok) {
+                throw new Error("Slip upload failed");
+            }
+
+            const uploadResult = await uploadResponse.json();
+
+            // 3. Submit to server action
+            const result = await submitPayment({
+                slipUrl: uploadResult.secure_url,
+                amount: amount,
+                userId: userId
+            });
 
             if (result.success) {
                 setIsSuccess(true);
                 toast.success("Payment slip submitted successfully! Wait for admin approval.");
-                setTimeout(() => router.push("/dashboard"), 3000);
+                setTimeout(() => router.push("/manage"), 3000);
             } else {
                 toast.error(result.error || "Failed to submit payment");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            toast.error("An error occurred. Please try again.");
+            toast.error(error.message || "An error occurred. Please try again.");
         } finally {
             setIsUploading(false);
         }

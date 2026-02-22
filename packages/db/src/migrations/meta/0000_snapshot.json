@@ -1,5 +1,5 @@
 {
-  "id": "cb0260c8-e59e-4a5e-8725-f01b5464e055",
+  "id": "7e1b0a35-92d8-47e0-bda9-41ef44b9622c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -442,6 +442,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "dress_code_colors": {
+          "name": "dress_code_colors",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
         "slug": {
           "name": "slug",
           "type": "text",
@@ -647,6 +653,13 @@
           "type": "boolean",
           "primaryKey": false,
           "notNull": true
+        },
+        "max_dress_code_colors": {
+          "name": "max_dress_code_colors",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 3
         }
       },
       "indexes": {},
@@ -714,6 +727,38 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.site_config": {
+      "name": "site_config",
+      "schema": "",
+      "columns": {
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.theme": {
       "name": "theme",
       "schema": "",
@@ -729,6 +774,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'classic'"
         },
         "primary_color": {
           "name": "primary_color",
@@ -806,7 +858,15 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "theme_slug_unique": {
+          "name": "theme_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

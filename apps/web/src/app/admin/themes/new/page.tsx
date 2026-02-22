@@ -9,7 +9,7 @@ export default async function NewThemePage() {
     });
 
     if (session?.user.role !== "admin") {
-        redirect("/dashboard");
+        redirect("/login");
     }
 
     return (

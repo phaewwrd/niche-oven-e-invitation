@@ -18,10 +18,14 @@ export function useUpdateEvent(eventId: string, userId: string) {
             }
             return result?.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             toast.success("Event updated successfully!");
             queryClient.invalidateQueries({ queryKey: ["event", eventId] });
-            router.push("/dashboard");
+            if (data?.slug) {
+                router.push(`/invitation/${data.slug}`);
+            } else {
+                router.push("/manage");
+            }
         },
         onError: (error: any) => {
             toast.error(error.message || "Failed to update event");

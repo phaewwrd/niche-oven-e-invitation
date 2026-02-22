@@ -17,22 +17,13 @@ export default function Header() {
           </span>
         </Link>
 
-        <div className="flex items-center gap-6">
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-              Home
-            </Link>
-            <Link href="/dashboard" className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-              Dashboard
-            </Link>
-          </nav>
 
-          <div className="h-6 w-px bg-border mx-2" />
 
-          <div className="flex items-center gap-4">
-            <ModeToggle />
-            <UserMenu />
-          </div>
+        <div className="h-6 w-px bg-border mx-2" />
+
+        <div className="flex items-center gap-4">
+          {/* <ModeToggle /> */}
+          <UserMenu />
         </div>
       </div>
     </header>

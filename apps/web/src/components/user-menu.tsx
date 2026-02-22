@@ -14,6 +14,7 @@ import { authClient } from "@/lib/auth-client";
 
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { Sparkles } from "lucide-react";
 
 export default function UserMenu() {
   const router = useRouter();
@@ -42,6 +43,16 @@ export default function UserMenu() {
           <DropdownMenuSeparator className="bg-border/50" />
           <div className="px-3 py-2 text-xs font-medium text-primary/70 italic truncate">
             {session.user.email}
+          </div>
+          <div>
+            <Link href="/manage">
+              <DropdownMenuItem
+                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest text-primary hover:bg-primary/5 transition-all cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" />
+                events
+              </DropdownMenuItem>
+            </Link>
           </div>
           <DropdownMenuItem
             className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest text-destructive hover:bg-destructive/5 transition-all cursor-pointer"

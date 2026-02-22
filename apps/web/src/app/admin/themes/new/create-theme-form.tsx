@@ -25,6 +25,7 @@ export default function CreateThemeForm() {
 
     const [formData, setFormData] = useState({
         title: "",
+        slug: "",
         primaryColor: "#1A1A1A",
         secondaryColor: "#C5A059",
         accentColor: "#F3F4F6",
@@ -45,7 +46,7 @@ export default function CreateThemeForm() {
             const result = await createThemeAction(formData);
             if (result.success) {
                 toast.success("Theme created successfully!");
-                router.push("/dashboard"); // Or wherever themes are listed
+                router.push("/manage"); // Or wherever themes are listed
             } else {
                 toast.error(result.error || "Failed to create theme");
             }
@@ -76,7 +77,7 @@ export default function CreateThemeForm() {
 
     return (
         <div className="max-w-4xl mx-auto py-10 animate-in fade-in duration-1000">
-            <Link href="/dashboard" className="inline-flex items-center text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-secondary transition-all mb-10 group bg-white/50 px-4 py-2 rounded-full border border-border shadow-sm">
+            <Link href="/manage" className="inline-flex items-center text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-secondary transition-all mb-10 group bg-white/50 px-4 py-2 rounded-full border border-border shadow-sm">
                 <ArrowLeft className="w-3 h-3 mr-2 group-hover:-translate-x-1 transition-transform" />
                 Return to Workspace
             </Link>
@@ -95,15 +96,27 @@ export default function CreateThemeForm() {
                         </div>
                         <h2 className="text-2xl font-serif font-black italic">Theme Core</h2>
                     </div>
-                    <div className="space-y-3">
-                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Artisan Tile</Label>
-                        <Input
-                            required
-                            value={formData.title}
-                            onChange={e => setFormData({ ...formData, title: e.target.value })}
-                            placeholder="e.g. Midnight Royale"
-                            className="py-8 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-xl font-serif italic"
-                        />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-3">
+                            <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Artisan Title</Label>
+                            <Input
+                                required
+                                value={formData.title}
+                                onChange={e => setFormData({ ...formData, title: e.target.value })}
+                                placeholder="e.g. Midnight Royale"
+                                className="py-8 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-xl font-serif italic"
+                            />
+                        </div>
+                        <div className="space-y-3">
+                            <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Layout Identifier (Slug)</Label>
+                            <Input
+                                required
+                                value={formData.slug}
+                                onChange={e => setFormData({ ...formData, slug: e.target.value })}
+                                placeholder="e.g. classic, luxury-monochrome"
+                                className="py-8 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-xl font-serif italic"
+                            />
+                        </div>
                     </div>
                 </section>
 
