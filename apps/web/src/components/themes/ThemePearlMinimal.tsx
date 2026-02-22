@@ -83,6 +83,64 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
         >
             <style jsx global>{`
                 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Great+Vibes&display=swap');
+
+                .hero-image-wrapper {
+                    position: relative;
+                }
+
+                /* Decorative corner lines on the portrait frame */
+                .portrait-frame::before,
+                .portrait-frame::after {
+                    content: '';
+                    position: absolute;
+                    width: 28px;
+                    height: 28px;
+                    z-index: 10;
+                    pointer-events: none;
+                }
+                .portrait-frame::before {
+                    top: -6px;
+                    left: -6px;
+                    border-top: 1px solid rgba(74,74,74,0.25);
+                    border-left: 1px solid rgba(74,74,74,0.25);
+                }
+                .portrait-frame::after {
+                    bottom: -6px;
+                    right: -6px;
+                    border-bottom: 1px solid rgba(74,74,74,0.25);
+                    border-right: 1px solid rgba(74,74,74,0.25);
+                }
+
+                .detail-image-wrapper::before,
+                .detail-image-wrapper::after {
+                    content: '';
+                    position: absolute;
+                    width: 36px;
+                    height: 36px;
+                    z-index: 10;
+                    pointer-events: none;
+                }
+                .detail-image-wrapper::before {
+                    top: -8px;
+                    left: -8px;
+                    border-top: 1px solid rgba(74,74,74,0.2);
+                    border-left: 1px solid rgba(74,74,74,0.2);
+                }
+                .detail-image-wrapper::after {
+                    bottom: -8px;
+                    right: -8px;
+                    border-bottom: 1px solid rgba(74,74,74,0.2);
+                    border-right: 1px solid rgba(74,74,74,0.2);
+                }
+
+                @keyframes fadeUp {
+                    from { opacity: 0; transform: translateY(16px); }
+                    to   { opacity: 1; transform: translateY(0); }
+                }
+                .fade-up { animation: fadeUp 0.9s ease both; }
+                .fade-up-delay-1 { animation-delay: 0.15s; }
+                .fade-up-delay-2 { animation-delay: 0.3s; }
+                .fade-up-delay-3 { animation-delay: 0.45s; }
             `}</style>
 
             {isExpired && (
@@ -92,41 +150,133 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
             )}
 
             {/* HERO */}
-            <header className="pt-16 sm:pt-20 pb-12 sm:pb-16 px-6 text-center">
-                <div className="mb-10 sm:mb-12">
-                    <h1 className="text-3xl sm:text-5xl font-serif font-medium leading-[1.2]">
-                        {event.groomName} <br />
-                        <span className="font-['Great_Vibes'] text-2xl sm:text-3xl opacity-40 my-2 block">&</span>
+            <header className="pt-16 sm:pt-24 pb-14 sm:pb-20 px-6 text-center">
+                {/* Names */}
+                <div className="mb-12 sm:mb-14 fade-up">
+                    <h1 className="text-3xl sm:text-5xl font-serif font-medium leading-[1.2] tracking-wide">
+                        {event.groomName}
+                        <span
+                            className="block my-3"
+                            style={{ fontFamily: "'Great Vibes', cursive", fontSize: "clamp(1.6rem, 5vw, 2.8rem)", opacity: 0.35 }}
+                        >
+                            &amp;
+                        </span>
                         {event.brideName}
                     </h1>
                 </div>
 
-                <div className="max-w-[240px] sm:max-w-[280px] mx-auto mb-10">
-                    <div className="aspect-[3/4] rounded-full overflow-hidden border-[10px] sm:border-[12px] border-white shadow-sm">
-                        <Image src={event.image1Url || theme.image1Url || ""} fill className="w-full h-full object-cover" alt="Couple" />
+                {/* Portrait — oval with layered rings + floating petals effect */}
+                <div className="relative inline-block mb-12 fade-up fade-up-delay-1">
+                    {/* Outer soft ring */}
+                    <div
+                        className="absolute inset-0 rounded-full"
+                        style={{
+                            margin: "-14px",
+                            border: "1px solid rgba(74,74,74,0.08)",
+                            borderRadius: "999px",
+                        }}
+                    />
+                    {/* Mid ring */}
+                    <div
+                        className="absolute inset-0 rounded-full"
+                        style={{
+                            margin: "-7px",
+                            border: "1px solid rgba(74,74,74,0.12)",
+                            borderRadius: "999px",
+                        }}
+                    />
+                    {/* Frame with corner accents */}
+                    <div
+                        className="portrait-frame relative"
+                        style={{ padding: "6px" }}
+                    >
+                        <div
+                            className="overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.10)]"
+                            style={{
+                                width: "clamp(200px, 52vw, 280px)",
+                                aspectRatio: "3/4",
+                                borderRadius: "999px",
+                                border: "10px solid #fff",
+                                position: "relative",
+                            }}
+                        >
+                            <Image
+                                src={event.image1Url || theme.image1Url || ""}
+                                fill
+                                className="object-cover"
+                                style={{ transform: "scale(1.03)", transition: "transform 8s ease" }}
+                                alt="Couple"
+                                priority
+                            />
+                            {/* Subtle inner vignette */}
+                            <div
+                                className="absolute inset-0 pointer-events-none"
+                                style={{
+                                    background: "radial-gradient(ellipse at center, transparent 55%, rgba(247,245,242,0.35) 100%)",
+                                    borderRadius: "inherit",
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-4">
-                    <div className="h-px w-8 sm:w-12 bg-black/10" />
-                    <div className="text-lg sm:text-xl tracking-[0.2em] font-light">
-                        {formatDateShort(event.eventDate)}
+                {/* Date line */}
+                <div className="fade-up fade-up-delay-2">
+                    <div className="flex items-center justify-center gap-4">
+                        <div className="h-px w-10 sm:w-16 bg-black/10" />
+                        <span className="text-lg sm:text-xl tracking-[0.25em] font-light">
+                            {formatDateShort(event.eventDate)}
+                        </span>
+                        <div className="h-px w-10 sm:w-16 bg-black/10" />
                     </div>
-                    <div className="h-px w-8 sm:w-12 bg-black/10" />
-                </div>
-                <div className="mt-4">
-                    <Heart className="w-4 h-4 mx-auto opacity-20 fill-current" />
+                    <div className="mt-5">
+                        <Heart className="w-3.5 h-3.5 mx-auto opacity-15 fill-current" />
+                    </div>
                 </div>
             </header>
 
             {/* INTRO */}
-            <section className="py-12 sm:py-16 px-6 sm:px-8 text-center max-w-lg mx-auto border-t border-black/5">
+            <section className="py-14 sm:py-20 px-6 sm:px-8 text-center max-w-lg mx-auto border-t border-black/5">
                 <h2 className="text-xl sm:text-2xl font-serif tracking-[0.2em] uppercase mb-6 sm:mb-8 opacity-80">Dear Guests!</h2>
                 <p className="text-base sm:text-lg leading-relaxed italic opacity-60">
                     This day will be special for us! With great joy and love, we invite you to our wedding.
                 </p>
-                <div className="mt-10 sm:mt-12 rounded-2xl overflow-hidden shadow-sm aspect-video">
-                    <Image src={event.image2Url || theme.image2Url || ""} fill className="w-full h-full object-cover" alt="Detail" />
+
+                {/* Detail image — landscape with tilt + offset layered shadow */}
+                <div className="mt-12 sm:mt-16 relative">
+                    {/* Ghost layer for depth */}
+                    <div
+                        className="absolute inset-0 rounded-2xl"
+                        style={{
+                            transform: "rotate(1.5deg) translate(6px, 6px)",
+                            backgroundColor: "rgba(74,74,74,0.06)",
+                            borderRadius: "1rem",
+                        }}
+                    />
+                    <div className="detail-image-wrapper relative">
+                        <div
+                            className="relative overflow-hidden shadow-[0_12px_48px_rgba(0,0,0,0.10)]"
+                            style={{
+                                aspectRatio: "16/10",
+                                borderRadius: "1rem",
+                                border: "8px solid #fff",
+                            }}
+                        >
+                            <Image
+                                src={event.image2Url || theme.image2Url || ""}
+                                fill
+                                className="object-cover"
+                                alt="Wedding detail"
+                            />
+                            {/* Slight warm overlay for cohesion */}
+                            <div
+                                className="absolute inset-0 pointer-events-none"
+                                style={{
+                                    background: "linear-gradient(to bottom, transparent 60%, rgba(247,245,242,0.25) 100%)",
+                                }}
+                            />
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -199,7 +349,7 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
                 </section>
             )}
 
-            {/* QUESTIONS/RSVP */}
+            {/* RSVP */}
             <section className="py-12 sm:py-16 px-6 sm:px-8 text-center max-w-lg mx-auto">
                 <h2 className="text-xl sm:text-2xl font-serif tracking-[0.2em] uppercase mb-6 sm:mb-8 opacity-80">Details</h2>
                 <p className="text-xs sm:text-sm italic opacity-50 mb-6 sm:mb-8 text-balance">If you have any questions, please contact our coordinator:</p>
@@ -229,7 +379,12 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
 
             {/* FOOTER */}
             <footer className="py-20 px-8 text-center">
-                <p className="text-sm font-['Great_Vibes'] text-2xl opacity-40 mb-4">With love,</p>
+                <p
+                    className="opacity-40 mb-4"
+                    style={{ fontFamily: "'Great Vibes', cursive", fontSize: "clamp(1.4rem, 5vw, 2rem)" }}
+                >
+                    With love,
+                </p>
                 <h2 className="text-3xl font-serif font-medium">{event.groomName} & {event.brideName}</h2>
                 <div className="mt-12 opacity-20">
                     <div className="h-px w-24 mx-auto bg-black mb-4" />

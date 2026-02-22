@@ -179,7 +179,7 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
             {(event.image2Url || theme.image2Url) && (
                 <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-20">
                     <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3]">
-                        <Image src={event.image2Url || theme.image2Url || ""} fill alt={`${event.groomName} & ${event.brideName} — portrait`} className="w-full h-full object-cover" />
+                        <Image src={event.image2Url || theme.image2Url || ""} fill alt={`${event.groomName} & ${event.brideName} — portrait`} className="w-full h-full object-cover" priority />
                     </div>
                 </section>
             )}
