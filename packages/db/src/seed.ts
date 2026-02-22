@@ -25,6 +25,7 @@ async function main() {
             allowSlug: false,
             allowQuote: false,
             allowMaps: false,
+            allowRsvp: false,
         },
         {
             id: "paid_plan_id",
@@ -36,6 +37,7 @@ async function main() {
             allowSlug: true,
             allowQuote: true,
             allowMaps: true,
+            allowRsvp: true,
         },
     ];
 
@@ -114,6 +116,36 @@ async function main() {
             accentColor: "#ffffff",
             backgroundColor: "#f7f5f2",
             fontFamily: "Cormorant Garamond",
+        },
+        {
+            id: "theme_tropical_paradise",
+            title: "Tropical Paradise",
+            slug: "tropical-paradise",
+            primaryColor: "#7ea9cb",
+            secondaryColor: "#f7f3e9",
+            accentColor: "#e88d67",
+            backgroundColor: "#f7f3e9",
+            fontFamily: "Pacifico",
+        },
+        {
+            id: "theme_vintage_love",
+            title: "Vintage Love",
+            slug: "vintage-love",
+            primaryColor: "#1a1a1a",
+            secondaryColor: "#e8e4e1",
+            accentColor: "#8d6e63",
+            backgroundColor: "#e8e4e1",
+            fontFamily: "Lora",
+        },
+        {
+            id: "theme_sweet_wine",
+            title: "Sweet Wine",
+            slug: "sweet-wine",
+            primaryColor: "#6d1313",
+            secondaryColor: "#f9f7f2",
+            accentColor: "#6d1313",
+            backgroundColor: "#f9f7f2",
+            fontFamily: "Playfair Display",
         }
     ];
 

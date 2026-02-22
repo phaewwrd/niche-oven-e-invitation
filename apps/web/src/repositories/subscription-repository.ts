@@ -17,5 +17,15 @@ export const subscriptionRepository = {
 
     async findAllPlans() {
         return await db.query.plan.findMany();
+    },
+
+    async findPendingPaymentByUserId(userId: string) {
+        return await db.query.payment.findFirst({
+            where: (payment, { eq, and }) => and(
+                eq(payment.userId, userId),
+                eq(payment.status, "pending")
+            ),
+            orderBy: (payment, { desc }) => [desc(payment.createdAt)],
+        });
     }
 };

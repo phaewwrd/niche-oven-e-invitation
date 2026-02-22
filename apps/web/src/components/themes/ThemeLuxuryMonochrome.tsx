@@ -2,6 +2,7 @@
 
 import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/business";
 import { MapPin, Heart, Clock, Quote as QuoteIcon, Calendar, Palette } from "lucide-react";
+import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
 
 interface ThemeProps {
@@ -212,6 +213,18 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
                 <section className="py-24 px-12 bg-black text-white text-center">
                     <div className="max-w-3xl mx-auto italic font-serif text-3xl opacity-80 leading-relaxed">
                         &ldquo;{event.quote}&rdquo;
+                    </div>
+                </section>
+            )}
+
+            {event.collectRsvp && (
+                <section className="py-32 px-12 bg-black text-white">
+                    <div className="max-w-xl mx-auto text-center space-y-12">
+                        <div className="space-y-4">
+                            <h2 className="text-5xl font-serif font-black italic uppercase tracking-tighter">Will you be there?</h2>
+                            <p className="text-[10px] font-black uppercase tracking-[0.6em] opacity-40">Please RSVP for our records</p>
+                        </div>
+                        <RsvpForm eventId={event.id} primaryColor="#ffffff" />
                     </div>
                 </section>
             )}

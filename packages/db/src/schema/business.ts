@@ -13,6 +13,7 @@ export const plan = pgTable("plan", {
     allowQuote: boolean("allow_quote").notNull(),
     allowMaps: boolean("allow_maps").notNull(),
     maxDressCodeColors: integer("max_dress_code_colors").default(3).notNull(),
+    allowRsvp: boolean("allow_rsvp").default(false).notNull(),
 });
 export type Plan = typeof plan.$inferSelect;
 
@@ -61,6 +62,7 @@ export const event = pgTable("event", {
     quote: text("quote"),
     dressCodeColors: text("dress_code_colors").array(),
     slug: text("slug").unique().notNull(),
+    collectRsvp: boolean("collect_rsvp").default(false).notNull(),
     expiresAt: timestamp("expires_at").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
@@ -95,3 +97,17 @@ export const siteConfig = pgTable("site_config", {
     updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
 export type SiteConfig = typeof siteConfig.$inferSelect;
+
+// RSVP Collection
+export const rsvp = pgTable("rsvp", {
+    id: text("id").primaryKey(),
+    eventId: text("event_id").notNull().references(() => event.id, { onDelete: 'cascade' }),
+    guestName: text("guest_name").notNull(),
+    email: text("email"),
+    phone: text("phone"),
+    totalGuests: integer("total_guests").default(1).notNull(),
+    isAttending: boolean("is_attending").default(true).notNull(),
+    message: text("message"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+export type Rsvp = typeof rsvp.$inferSelect;

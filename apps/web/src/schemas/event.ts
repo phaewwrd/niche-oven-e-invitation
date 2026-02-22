@@ -12,6 +12,7 @@ export const eventSchema = z.object({
     image1Url: z.string().optional().or(z.literal("")),
     image2Url: z.string().optional().or(z.literal("")),
     dressCodeColors: z.array(z.string()),
+    collectRsvp: z.boolean(),
     schedules: z.array(z.object({
         time: z.string().min(1, "Time is required"),
         title: z.string().min(1, "Activity is required"),

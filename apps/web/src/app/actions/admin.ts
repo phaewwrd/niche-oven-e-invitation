@@ -1,10 +1,9 @@
 "use server";
 
-import { db } from "@niche-e-invitation/db";
-import { payment, userSubscription, plan, user } from "@niche-e-invitation/db/schema";
+import { db, payment, userSubscription, plan, user } from "@niche-e-invitation/db";
 import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { auth } from "@niche-e-invitation/auth";
+import { auth } from "@niche-e-invitation/auth/auth";
 import { headers } from "next/headers";
 
 export async function approvePayment(paymentId: string) {

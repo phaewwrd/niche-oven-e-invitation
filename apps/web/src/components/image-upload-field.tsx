@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ImageIcon, Loader2, X, Upload } from "lucide-react";
-import { uploadImageAction } from "@/app/actions/upload";
+import { getCloudinarySignature } from "@/app/actions/upload";
 import { toast } from "sonner";
 import Image from "next/image";
 
@@ -22,26 +22,49 @@ export function ImageUploadField({ label, value, onChange, folder = "events" }: 
         if (!file) return;
 
         // Basic validation
-        if (file.size > 5 * 1024 * 1024) {
-            toast.error("File size must be less than 5MB");
+        if (file.size > 10 * 1024 * 1024) { // Increased to 10MB to match server config
+            toast.error("File size must be less than 10MB");
             return;
         }
 
         setIsUploading(true);
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("folder", folder);
 
         try {
-            const result = await uploadImageAction(formData);
-            if (result.success && result.url) {
-                onChange(result.url);
-                toast.success("Image uploaded!");
-            } else {
-                toast.error(result.error || "Upload failed");
+            // 1. Get signature from server
+            const { signature, timestamp, cloudName, apiKey } = await getCloudinarySignature(folder);
+
+            // 2. Prepare Form Data for direct client-side upload
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("folder", folder);
+            formData.append("timestamp", timestamp.toString());
+            formData.append("api_key", apiKey);
+            formData.append("signature", signature);
+
+            // 3. POST directly to Cloudinary from the browser
+            const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || "Client-side upload failed");
             }
-        } catch (error) {
-            toast.error("An error occurred during upload");
+
+            const result = await response.json();
+
+            if (result.secure_url) {
+                onChange(result.secure_url);
+                toast.success("Image uploaded beautifully!");
+            } else {
+                toast.error("Upload failed internally");
+            }
+        } catch (error: any) {
+            console.error("Direct upload error:", error);
+            toast.error(error.message || "An error occurred during upload");
         } finally {
             setIsUploading(false);
         }

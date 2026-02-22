@@ -2,6 +2,7 @@
 
 import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/business";
 import { MapPin, Heart, Calendar as CalendarIcon, Clock } from "lucide-react";
+import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
 
 interface ThemeProps {
@@ -261,6 +262,18 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
                     <Countdown targetDate={event.eventDate} />
                 </div>
             </section>
+
+            {event.collectRsvp && (
+                <section className="py-24 px-8 border-t border-black/5 bg-[#fcfcf9]">
+                    <div className="max-w-md mx-auto text-center space-y-12">
+                        <div className="space-y-4">
+                            <h2 className="text-4xl font-serif italic tracking-tighter">Will you attend?</h2>
+                            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">Please respond to our invitation</p>
+                        </div>
+                        <RsvpForm eventId={event.id} primaryColor="#2d4030" />
+                    </div>
+                </section>
+            )}
 
             {/* FOOTER */}
             <footer className="py-24 px-8 text-center border-t border-black/5">

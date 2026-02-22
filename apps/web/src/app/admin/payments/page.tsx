@@ -1,8 +1,7 @@
-import { auth } from "@niche-e-invitation/auth";
+import { auth } from "@niche-e-invitation/auth/auth";
 import { headers } from "next/headers";
 import { redirect, notFound } from "next/navigation";
-import { db } from "@niche-e-invitation/db";
-import { payment } from "@niche-e-invitation/db/schema";
+import { db, payment } from "@niche-e-invitation/db";
 import { eq, desc } from "drizzle-orm";
 import PaymentApprovalList from "./approval-list";
 
@@ -12,7 +11,7 @@ export default async function AdminPaymentsPage() {
     });
 
     if (session?.user.role !== "admin") {
-        redirect("/dashboard"); // Or show unauthorized
+        redirect("/manage"); // Or show unauthorized
     }
 
     const payments = await db.query.payment.findMany({

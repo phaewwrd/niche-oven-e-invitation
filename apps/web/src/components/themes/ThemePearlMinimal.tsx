@@ -2,6 +2,7 @@
 
 import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/business";
 import { MapPin, Heart, Clock, Camera, Utensils, Music, GlassWater, Gift } from "lucide-react";
+import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
 
 interface ThemeProps {
@@ -198,14 +199,20 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
             <section className="py-16 px-8 text-center max-w-lg mx-auto">
                 <h2 className="text-2xl font-serif tracking-[0.2em] uppercase mb-8 opacity-80">Details</h2>
                 <p className="text-sm italic opacity-50 mb-8">If you have any questions, please contact our coordinator:</p>
-                <div className="space-y-4">
-                    <button className="w-full py-4 rounded-full border border-black/10 text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-sm">
-                        Contact Us
-                    </button>
-                    <button className="w-full py-4 rounded-full bg-[#4a4a4a] text-white text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg">
-                        Fill out the RSVP form
-                    </button>
-                </div>
+                {event.collectRsvp ? (
+                    <div className="mt-8">
+                        <RsvpForm eventId={event.id} primaryColor="#4a4a4a" />
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        <button className="w-full py-4 rounded-full border border-black/10 text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-sm">
+                            Contact Us
+                        </button>
+                        <button className="w-full py-4 rounded-full bg-[#4a4a4a] text-white text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg">
+                            Fill out the RSVP form
+                        </button>
+                    </div>
+                )}
             </section>
 
             {/* COUNTDOWN */}

@@ -2,6 +2,7 @@
 
 import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/business";
 import { MapPin, Heart, Quote as QuoteIcon, ChevronDown, Palette } from "lucide-react";
+import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
 
 interface ThemeProps {
@@ -251,6 +252,18 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
                             <Heart className="w-4 h-4 opacity-30" style={{ color: "var(--t-accent)", fill: "var(--t-accent)" }} />
                             <div className="w-16 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
                         </div>
+                    </div>
+                </section>
+            )}
+
+            {event.collectRsvp && (
+                <section className="py-24 px-6 bg-black/5">
+                    <div className="max-w-xl mx-auto text-center space-y-12">
+                        <div className="space-y-4">
+                            <h2 className="text-4xl font-serif italic" style={{ color: "var(--t-primary)" }}>Will you attend?</h2>
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em] opacity-40" style={{ color: "var(--t-secondary)" }}>Please respond to our invitation</p>
+                        </div>
+                        <RsvpForm eventId={event.id} primaryColor={theme.primaryColor} />
                     </div>
                 </section>
             )}

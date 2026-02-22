@@ -7,14 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { Plus, Trash2, Calendar as CalendarIcon, MapPin, Quote, Globe, Loader2, Sparkles, Image as ImageIcon, Camera } from "lucide-react";
-import { createEventAction } from "@/app/actions/event";
+import { useUpdateEvent } from "@/hooks/use-update-event";
 import { ImageUploadField } from "@/components/image-upload-field";
 import { ColorPaletteField } from "@/components/color-palette-field";
 
-export default function CreateEventForm({ userId, themes, subscription }: { userId: string, themes: any[], subscription: any }) {
-    const router = useRouter();
+interface EditEventFormProps {
+    userId: string;
+    eventId: string;
+    initialData: any;
+    themes: any[];
+    subscription: any;
+}
+
+export default function EditEventForm({ userId, eventId, initialData, themes, subscription }: EditEventFormProps) {
     const isPaid = subscription?.plan?.name === 'paid';
     const maxSchedules = subscription?.plan?.maxSchedule || 4;
 
@@ -24,23 +30,24 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
         handleSubmit,
         setValue,
         watch,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<EventSchema>({
         resolver: zodResolver(eventSchema),
         defaultValues: {
-            groomName: "",
-            brideName: "",
-            eventDate: "",
-            locationText: "",
-            googleMapsUrl: "",
-            quote: "",
-            slug: "",
-            themeId: themes[0]?.id || "",
-            image1Url: "",
-            image2Url: "",
-            dressCodeColors: [],
-            collectRsvp: false,
-            schedules: [{ time: "", title: "" }]
+            groomName: initialData.groomName || "",
+            brideName: initialData.brideName || "",
+            eventDate: initialData.eventDate ? new Date(initialData.eventDate).toISOString().slice(0, 16) : "",
+            locationText: initialData.locationText || "",
+            googleMapsUrl: initialData.googleMapsUrl || "",
+            quote: initialData.quote || "",
+            themeId: initialData.themeId || themes[0]?.id || "",
+            image1Url: initialData.image1Url || "",
+            image2Url: initialData.image2Url || "",
+            dressCodeColors: initialData.dressCodeColors || [],
+            collectRsvp: initialData.collectRsvp || false,
+            schedules: initialData.schedules?.length > 0
+                ? initialData.schedules.map((s: any) => ({ time: s.time, title: s.title }))
+                : [{ time: "", title: "" }]
         }
     });
 
@@ -49,23 +56,14 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
         name: "schedules"
     });
 
+    const updateEvent = useUpdateEvent(eventId, userId);
+
     const selectedThemeId = watch("themeId");
     const image1Url = watch("image1Url");
     const image2Url = watch("image2Url");
 
-    const onSubmit = async (data: EventSchema) => {
-        try {
-            const result = await createEventAction(data);
-
-            if (result?.data?.success && result.data.slug) {
-                toast.success("Event created successfully!");
-                router.push(`/invitation/${result.data.slug}`);
-            } else {
-                toast.error(result?.serverError || "Failed to create event");
-            }
-        } catch (error) {
-            toast.error("An error occurred while creating the event");
-        }
+    const onSubmit = (data: EventSchema) => {
+        updateEvent.mutate(data);
     };
 
     return (
@@ -244,12 +242,12 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                     </div>
 
                     <div className="space-y-3">
-                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Signature URL {isPaid ? <span className="bg-secondary/20 text-secondary text-[10px] px-2.5 py-1 rounded-full font-black">PREMIUM</span> : null}</Label>
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Signature URL</Label>
                         <div className="relative">
                             <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground font-black text-sm lowercase italic opacity-50">niche-e.com/</span>
-                            <Input disabled={!isPaid} {...register("slug")} placeholder={isPaid ? "yourname-wedding" : "auto-generated-slug"} className="py-7 pl-36 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all font-black text-primary" />
+                            <Input disabled value={initialData.slug} className="py-7 pl-36 rounded-2xl border-border bg-muted/30 focus:ring-2 focus:ring-secondary/20 transition-all font-black text-primary opacity-60 cursor-not-allowed" />
                         </div>
-                        <p className="text-[10px] text-muted-foreground pl-2 italic">Once finalized, the signature URL becomes permanent.</p>
+                        <p className="text-[10px] text-muted-foreground pl-2 italic">The signature URL is permanent and architecturally locked.</p>
                     </div>
 
                     <div className="md:col-span-2 p-8 bg-[#fdfdfd] border-2 border-dashed border-border rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 group hover:border-secondary/30 transition-all">
@@ -279,9 +277,9 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                                 </span>
                             </div>
                         ) : (
-                            <Button type="button" variant="outline" className="rounded-xl border-secondary/20 text-secondary font-black text-xs h-12 hover:bg-secondary/5" onClick={() => router.push("/manage/upgrade")}>
-                                <Plus className="w-3 h-3 mr-2" /> Upgrade to unlock
-                            </Button>
+                            <div className="p-4 bg-muted/50 rounded-xl text-[10px] font-black uppercase tracking-widest text-muted-foreground italic border border-border">
+                                Premium Only
+                            </div>
                         )}
                     </div>
                 </div>
@@ -290,16 +288,16 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
             <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-full max-w-4xl px-8 flex gap-4 z-50">
                 <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={updateEvent.isPending}
                     className="flex-1 py-10 text-2xl font-black rounded-[2rem] bg-primary text-primary-foreground shadow-2xl shadow-primary/20 transform active:scale-[0.98] hover:brightness-110 transition-all border-4 border-white"
                 >
-                    {isSubmitting ? (
+                    {updateEvent.isPending ? (
                         <>
                             <Loader2 className="mr-4 h-8 w-8 animate-spin text-secondary" />
-                            Creating your memorable invitation...
+                            Synchronizing Collection...
                         </>
                     ) : (
-                        "Create your memorable invitation"
+                        "Refine & Save"
                     )}
                 </Button>
             </div>

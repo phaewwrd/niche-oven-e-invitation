@@ -62,6 +62,7 @@ CREATE TABLE "event" (
 	"quote" text,
 	"dress_code_colors" text[],
 	"slug" text NOT NULL,
+	"collect_rsvp" boolean DEFAULT false NOT NULL,
 	"expires_at" timestamp NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
@@ -87,7 +88,20 @@ CREATE TABLE "plan" (
 	"allow_slug" boolean NOT NULL,
 	"allow_quote" boolean NOT NULL,
 	"allow_maps" boolean NOT NULL,
-	"max_dress_code_colors" integer DEFAULT 3 NOT NULL
+	"max_dress_code_colors" integer DEFAULT 3 NOT NULL,
+	"allow_rsvp" boolean DEFAULT false NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "rsvp" (
+	"id" text PRIMARY KEY NOT NULL,
+	"event_id" text NOT NULL,
+	"guest_name" text NOT NULL,
+	"email" text,
+	"phone" text,
+	"total_guests" integer DEFAULT 1 NOT NULL,
+	"is_attending" boolean DEFAULT true NOT NULL,
+	"message" text,
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "schedule" (
@@ -136,6 +150,7 @@ ALTER TABLE "event" ADD CONSTRAINT "event_user_id_user_id_fk" FOREIGN KEY ("user
 ALTER TABLE "event" ADD CONSTRAINT "event_plan_id_plan_id_fk" FOREIGN KEY ("plan_id") REFERENCES "public"."plan"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "event" ADD CONSTRAINT "event_theme_id_theme_id_fk" FOREIGN KEY ("theme_id") REFERENCES "public"."theme"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "payment" ADD CONSTRAINT "payment_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "rsvp" ADD CONSTRAINT "rsvp_event_id_event_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."event"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "schedule" ADD CONSTRAINT "schedule_event_id_event_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."event"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_subscription" ADD CONSTRAINT "user_subscription_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_subscription" ADD CONSTRAINT "user_subscription_plan_id_plan_id_fk" FOREIGN KEY ("plan_id") REFERENCES "public"."plan"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

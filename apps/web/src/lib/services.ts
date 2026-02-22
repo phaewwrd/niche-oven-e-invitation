@@ -43,3 +43,7 @@ export async function getPlans() {
 export async function getThemes() {
     return await themeRepository.findAll();
 }
+
+export async function getPendingPayment(userId: string) {
+    return await subscriptionRepository.findPendingPaymentByUserId(userId);
+}
