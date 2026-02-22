@@ -1,5 +1,5 @@
 {
-  "id": "ee7cdf0a-bdfb-4e75-9260-a4b3fe85ce52",
+  "id": "c118db61-833c-407d-b674-1ffe89ff7121",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -426,6 +426,18 @@
         },
         "location_text": {
           "name": "location_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location_province": {
+          "name": "location_province",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location_country": {
+          "name": "location_country",
           "type": "text",
           "primaryKey": false,
           "notNull": false

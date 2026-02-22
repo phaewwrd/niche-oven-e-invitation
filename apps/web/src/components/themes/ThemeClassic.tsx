@@ -86,14 +86,14 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
                 />
 
                 <div className={`relative z-10 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-                    <p className="text-xs uppercase tracking-[0.4em] mb-6 font-medium opacity-60" style={{ color: "var(--t-secondary)" }}>
+                    <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] mb-4 sm:mb-6 font-medium opacity-60" style={{ color: "var(--t-secondary)" }}>
                         The Wedding of
                     </p>
 
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight">
+                    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight px-4">
                         <span style={{ color: "var(--t-primary)" }}>{event.groomName}</span>
-                        <span className="block my-4">
-                            <span className="inline-block text-2xl sm:text-3xl font-light italic opacity-50 mx-4" style={{ color: "var(--t-accent)" }}>
+                        <span className="block my-2 sm:my-4">
+                            <span className="inline-block text-xl sm:text-3xl font-light italic opacity-50 mx-4" style={{ color: "var(--t-accent)" }}>
                                 &
                             </span>
                         </span>
@@ -101,9 +101,9 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
                     </h1>
 
                     <div className="flex items-center justify-center gap-4 mt-8">
-                        <div className="w-16 h-px opacity-30" style={{ backgroundColor: "var(--t-accent)" }} />
+                        <div className="w-12 sm:w-16 h-px opacity-30" style={{ backgroundColor: "var(--t-accent)" }} />
                         <Heart className="w-4 h-4 opacity-40" style={{ color: "var(--t-accent)" }} />
-                        <div className="w-16 h-px opacity-30" style={{ backgroundColor: "var(--t-accent)" }} />
+                        <div className="w-12 sm:w-16 h-px opacity-30" style={{ backgroundColor: "var(--t-accent)" }} />
                     </div>
                 </div>
 
@@ -121,34 +121,39 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
                 </section>
             )}
 
-            <section className="py-20 px-6 text-center">
+            <section className="py-16 sm:py-20 px-6 text-center">
                 <div className={`max-w-2xl mx-auto transition-all duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-                    <p className="text-xs uppercase tracking-[0.3em] mb-4 font-medium" style={{ color: "var(--t-secondary)", opacity: 0.7 }}>
+                    <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-4 font-medium" style={{ color: "var(--t-secondary)", opacity: 0.7 }}>
                         Save the Date
                     </p>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight" style={{ color: "var(--t-primary)" }}>
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight" style={{ color: "var(--t-primary)" }}>
                         {formatDate(event.eventDate)}
                     </h2>
 
                     <div className="flex items-center justify-center gap-3 mt-8">
-                        <div className="w-24 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
+                        <div className="w-16 sm:w-24 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
                         <div className="w-2 h-2 rounded-full opacity-40" style={{ backgroundColor: "var(--t-accent)" }} />
-                        <div className="w-24 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
+                        <div className="w-16 sm:w-24 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
                     </div>
                 </div>
             </section>
 
             {event.locationText && (
-                <section className="pb-20 px-6 text-center">
+                <section className="pb-16 sm:pb-20 px-6 text-center">
                     <div className="max-w-2xl mx-auto">
                         <div className="flex items-center justify-center gap-2 mb-4">
-                            <MapPin className="w-5 h-5 opacity-50" style={{ color: "var(--t-accent)" }} />
-                            <p className="text-xs uppercase tracking-[0.3em] font-medium" style={{ color: "var(--t-secondary)", opacity: 0.7 }}>
+                            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 opacity-50" style={{ color: "var(--t-accent)" }} />
+                            <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-medium" style={{ color: "var(--t-secondary)", opacity: 0.7 }}>
                                 Venue
                             </p>
                         </div>
-                        <h3 className="text-2xl sm:text-3xl font-semibold" style={{ color: "var(--t-primary)" }}>
+                        <h3 className="text-xl sm:text-3xl font-semibold px-4" style={{ color: "var(--t-primary)" }}>
                             {event.locationText}
+                            {(event.locationProvince || event.locationCountry) && (
+                                <span className="block text-sm uppercase tracking-[0.2em] font-light mt-2 opacity-60">
+                                    {[event.locationProvince, event.locationCountry].filter(Boolean).join(", ")}
+                                </span>
+                            )}
                         </h3>
 
                         {event.googleMapsUrl && (
@@ -174,7 +179,7 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
             {event.image2Url && (
                 <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-20">
                     <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3]">
-                        <Image src={event.image2Url} alt={`${event.groomName} & ${event.brideName} — portrait`} className="w-full h-full object-cover" />
+                        <Image src={event.image2Url || "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80"} alt={`${event.groomName} & ${event.brideName} — portrait`} className="w-full h-full object-cover" />
                     </div>
                 </section>
             )}
@@ -192,14 +197,14 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
                             Our Wedding Colors
                         </h3>
 
-                        <div className="flex items-center justify-center gap-6">
+                        <div className="flex items-center justify-center gap-4 sm:gap-6">
                             {event.dressCodeColors.map((color, index) => (
                                 <div key={index} className="flex flex-col items-center gap-3">
                                     <div
-                                        className="w-16 h-16 rounded-full shadow-lg border-4 border-white transform hover:scale-110 transition-transform duration-300"
+                                        className="w-12 h-12 sm:w-16 sm:h-16 rounded-full shadow-lg border-4 border-white transform hover:scale-110 transition-transform duration-300"
                                         style={{ backgroundColor: color }}
                                     />
-                                    <span className="text-[10px] font-black uppercase tracking-tighter opacity-40">{color}</span>
+                                    <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-tighter opacity-40">{color}</span>
                                 </div>
                             ))}
                         </div>
@@ -217,20 +222,20 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
                             Timeline
                         </h2>
 
-                        <div className="flex flex-wrap items-center justify-center gap-y-12 gap-x-4 max-w-5xl mx-auto px-4">
+                        <div className="flex flex-wrap items-center justify-center gap-y-8 sm:gap-y-12 gap-x-4 max-w-5xl mx-auto px-4">
                             {sortedSchedules.map((item, index) => (
-                                <div key={item.id} className="flex items-center gap-4">
-                                    <div className="flex flex-col items-center">
-                                        <p className="text-[10px] uppercase tracking-widest font-black mb-1" style={{ color: "var(--t-accent)", opacity: 0.8 }}>
+                                <div key={item.id} className="flex items-center gap-3 sm:gap-4">
+                                    <div className="flex flex-col items-center text-center">
+                                        <p className="text-[8px] sm:text-[10px] uppercase tracking-widest font-black mb-1" style={{ color: "var(--t-accent)", opacity: 0.8 }}>
                                             {formatTime(item.time)}
                                         </p>
-                                        <p className="text-lg font-serif font-bold italic" style={{ color: "var(--t-primary)" }}>
+                                        <p className="text-base sm:text-lg font-serif font-bold italic" style={{ color: "var(--t-primary)" }}>
                                             {item.title}
                                         </p>
                                     </div>
 
                                     {index < sortedSchedules.length - 1 && (
-                                        <span className="text-2xl font-light opacity-30 select-none mx-2 mt-4" style={{ color: "var(--t-accent)" }}>
+                                        <span className="text-xl sm:text-2xl font-light opacity-30 select-none mx-2 mt-4" style={{ color: "var(--t-accent)" }}>
                                             —
                                         </span>
                                     )}
@@ -242,26 +247,26 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
             )}
 
             {event.quote && (
-                <section className="py-20 px-6">
+                <section className="py-16 sm:py-20 px-6">
                     <div className="max-w-3xl mx-auto text-center">
-                        <QuoteIcon className="w-10 h-10 mx-auto mb-8 opacity-20" style={{ color: "var(--t-accent)" }} />
-                        <blockquote className="text-2xl sm:text-3xl md:text-4xl font-light italic leading-relaxed" style={{ color: "var(--t-primary)", opacity: 0.75 }}>
+                        <QuoteIcon className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-6 sm:mb-8 opacity-20" style={{ color: "var(--t-accent)" }} />
+                        <blockquote className="text-xl sm:text-3xl md:text-4xl font-light italic leading-relaxed px-4" style={{ color: "var(--t-primary)", opacity: 0.75 }}>
                             &ldquo;{event.quote}&rdquo;
                         </blockquote>
-                        <div className="flex items-center justify-center gap-3 mt-10">
-                            <div className="w-16 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
+                        <div className="flex items-center justify-center gap-3 mt-8 sm:mt-10">
+                            <div className="w-12 sm:w-16 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
                             <Heart className="w-4 h-4 opacity-30" style={{ color: "var(--t-accent)", fill: "var(--t-accent)" }} />
-                            <div className="w-16 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
+                            <div className="w-12 sm:w-16 h-px opacity-20" style={{ backgroundColor: "var(--t-accent)" }} />
                         </div>
                     </div>
                 </section>
             )}
 
             {event.collectRsvp && (
-                <section className="py-24 px-6 bg-black/5">
+                <section className="py-20 sm:py-24 px-6 bg-black/5">
                     <div className="max-w-xl mx-auto text-center space-y-12">
                         <div className="space-y-4">
-                            <h2 className="text-4xl font-serif italic" style={{ color: "var(--t-primary)" }}>Will you attend?</h2>
+                            <h2 className="text-3xl sm:text-4xl font-serif italic" style={{ color: "var(--t-primary)" }}>Will you attend?</h2>
                             <p className="text-[10px] font-black uppercase tracking-[0.5em] opacity-40" style={{ color: "var(--t-secondary)" }}>Please respond to our invitation</p>
                         </div>
                         <RsvpForm eventId={event.id} primaryColor={theme.primaryColor} />

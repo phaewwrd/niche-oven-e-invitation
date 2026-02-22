@@ -58,6 +58,8 @@ export const event = pgTable("event", {
     image2Url: text("image2_url"),
     eventDate: timestamp("event_date").notNull(),
     locationText: text("location_text"),
+    locationProvince: text("location_province"),
+    locationCountry: text("location_country"),
     googleMapsUrl: text("google_maps_url"),
     quote: text("quote"),
     dressCodeColors: text("dress_code_colors").array(),

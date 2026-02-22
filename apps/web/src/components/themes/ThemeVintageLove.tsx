@@ -37,23 +37,23 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
     return (
         <div className="min-h-screen bg-[#e8e4e1] text-[#2c2c2c] font-serif selection:bg-[#8d6e63]/30">
             {/* Hero Section */}
-            <header className="relative h-screen grid grid-cols-1 md:grid-cols-2">
-                <div className="bg-[#dcd6d1] flex flex-col items-center justify-center p-12 text-center z-10">
+            <header className="relative min-h-screen grid grid-cols-1 md:grid-cols-2">
+                <div className="bg-[#dcd6d1] flex flex-col items-center justify-center p-8 sm:p-12 text-center z-10">
                     <div className="space-y-6">
                         <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-50 block mb-4">You are invited to the wedding of</span>
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#1a1a1a] flex flex-col gap-2">
+                        <h1 className="text-3xl sm:text-4xl lg:text-6xl font-serif text-[#1a1a1a] flex flex-col gap-2">
                             <span className="italic">{event.groomName}</span>
                             <span className="text-xl opacity-30 tracking-widest font-sans">&</span>
                             <span className="italic">{event.brideName}</span>
                         </h1>
 
                         {/* Large LOVE Graphic */}
-                        <div className="relative mt-20 mb-20 pointer-events-none">
-                            <div className="text-[14rem] sm:text-[18rem] font-bold leading-none select-none opacity-[0.03] tracking-tighter">
+                        <div className="relative mt-12 sm:mt-20 mb-12 sm:mb-20 pointer-events-none overflow-hidden">
+                            <div className="text-[10rem] sm:text-[14rem] lg:text-[18rem] font-bold leading-none select-none opacity-[0.03] tracking-tighter">
                                 LOVE
                             </div>
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="text-8xl sm:text-9xl font-serif italic text-transparent bg-clip-text bg-gradient-to-br from-[#1a1a1a] to-[#4a4a4a]">
+                                <div className="text-6xl sm:text-8xl lg:text-9xl font-serif italic text-transparent bg-clip-text bg-gradient-to-br from-[#1a1a1a] to-[#4a4a4a]">
                                     L
                                 </div>
                             </div>
@@ -61,7 +61,7 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
 
                         <div className="space-y-2">
                             <div className="w-12 h-[1px] bg-[#1a1a1a]/20 mx-auto mb-6" />
-                            <p className="text-2xl font-serif tracking-widest uppercase">
+                            <p className="text-xl sm:text-2xl font-serif tracking-widest uppercase">
                                 {day.toString().padStart(2, '0')}.{(month + 1).toString().padStart(2, '0')}.{year.toString().slice(-2)}
                             </p>
                             <p className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-40">Save the Date</p>
@@ -69,7 +69,7 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
                     </div>
                 </div>
 
-                <div className="relative overflow-hidden">
+                <div className="relative min-h-[50vh] md:min-h-screen overflow-hidden">
                     <Image
                         src={event.image1Url || "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80"}
                         alt="Background"
@@ -92,29 +92,29 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
             </header>
 
             {/* Intro Section */}
-            <section className="py-32 px-6">
+            <section className="py-20 sm:py-32 px-6">
                 <div className="max-w-3xl mx-auto text-center space-y-12">
                     <div className="flex items-center justify-center gap-4">
-                        <div className="w-12 h-[1px] bg-[#1a1a1a]/10" />
+                        <div className="w-8 sm:w-12 h-[1px] bg-[#1a1a1a]/10" />
                         <div className="w-10 h-10 border border-[#1a1a1a]/10 rounded-full flex items-center justify-center">
                             <span className="text-sm font-serif italic">{event.groomName[0]}{event.brideName[0]}</span>
                         </div>
-                        <div className="w-12 h-[1px] bg-[#1a1a1a]/10" />
+                        <div className="w-8 sm:w-12 h-[1px] bg-[#1a1a1a]/10" />
                     </div>
 
-                    <h2 className="text-3xl font-serif italic">Dearest guests</h2>
-                    <p className="text-lg text-[#1a1a1a]/60 leading-relaxed font-serif max-w-xl mx-auto">
+                    <h2 className="text-2xl sm:text-3xl font-serif italic">Dearest guests</h2>
+                    <p className="text-base sm:text-lg text-[#1a1a1a]/60 leading-relaxed font-serif max-w-xl mx-auto">
                         {event.quote || "Life is only meaningful when shared with someone special. We cordially invite you to celebrate the beginning of our forever together."}
                     </p>
 
-                    <div className="text-2xl font-serif tracking-widest border-t border-b border-[#1a1a1a]/5 py-8 inline-block px-12">
+                    <div className="text-xl sm:text-2xl font-serif tracking-widest border-t border-b border-[#1a1a1a]/5 py-6 sm:py-8 inline-block px-8 sm:px-12">
                         {day} {MONTHS_EN[month]} {year}
                     </div>
                 </div>
             </section>
 
             {/* Visual Break */}
-            <section className="h-[60vh] relative overflow-hidden flex items-center justify-center">
+            <section className="min-h-[60vh] py-12 relative overflow-hidden flex items-center justify-center">
                 <Image
                     src={event.image2Url || "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80"}
                     alt="Atmospheric"
@@ -123,10 +123,17 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
                 />
                 <div className="absolute inset-0 bg-[#1a1a1a]/20" />
                 <div className="relative z-10 w-full max-w-lg px-6">
-                    <div className="bg-white/80 backdrop-blur-md p-10 text-center shadow-2xl">
-                        <h3 className="text-2xl font-serif italic mb-6">Location</h3>
+                    <div className="bg-white/80 backdrop-blur-md p-8 sm:p-10 text-center shadow-2xl">
+                        <h3 className="text-xl sm:text-2xl font-serif italic mb-6">Location</h3>
                         <div className="space-y-4">
-                            <p className="text-sm uppercase tracking-widest opacity-70 leading-relaxed">{event.locationText}</p>
+                            <p className="text-xs sm:text-sm uppercase tracking-widest opacity-70 leading-relaxed">
+                                {event.locationText}
+                                {(event.locationProvince || event.locationCountry) && (
+                                    <span className="block mt-2 opacity-50">
+                                        {[event.locationProvince, event.locationCountry].filter(Boolean).join(", ")}
+                                    </span>
+                                )}
+                            </p>
                             {event.googleMapsUrl && (
                                 <a
                                     href={event.googleMapsUrl}
@@ -143,16 +150,16 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
             </section>
 
             {/* Timing & Program */}
-            <section className="py-32 px-6">
-                <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24">
-                    <div className="space-y-12">
-                        <h2 className="text-4xl font-serif italic">Timing</h2>
-                        <div className="space-y-12">
+            <section className="py-20 sm:py-32 px-6">
+                <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+                    <div className="space-y-8 sm:space-y-12">
+                        <h2 className="text-3xl sm:text-4xl font-serif italic">Timing</h2>
+                        <div className="space-y-8 sm:space-y-12">
                             {schedules.map((item, idx) => (
                                 <div key={idx} className="flex gap-8 group">
-                                    <div className="text-sm font-black opacity-30 tracking-[0.2em] transform -rotate-90 h-fit mt-1">{item.time}</div>
+                                    <div className="text-[10px] sm:text-sm font-black opacity-30 tracking-[0.2em] transform -rotate-90 h-fit mt-1">{item.time}</div>
                                     <div className="space-y-2">
-                                        <h4 className="text-xl font-serif italic group-hover:text-[#8d6e63] transition-colors">{item.title}</h4>
+                                        <h4 className="text-lg sm:text-xl font-serif italic group-hover:text-[#8d6e63] transition-colors">{item.title}</h4>
                                         <div className="w-8 h-[1px] bg-[#1a1a1a]/10" />
                                     </div>
                                 </div>
@@ -194,10 +201,10 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
 
             {/* RSVP Section */}
             {event.collectRsvp && (
-                <section className="py-32 px-6 bg-[#dcd6d1]">
+                <section className="py-20 sm:py-32 px-6 bg-[#dcd6d1]">
                     <div className="max-w-xl mx-auto text-center space-y-12">
                         <div className="space-y-4">
-                            <h2 className="text-4xl font-serif italic">Will you join us?</h2>
+                            <h2 className="text-3xl sm:text-4xl font-serif italic">Will you join us?</h2>
                             <p className="text-[10px] font-black uppercase tracking-[0.5em] opacity-40">Please respond by our date</p>
                         </div>
                         <RsvpForm eventId={event.id} primaryColor={theme.primaryColor} />

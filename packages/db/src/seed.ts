@@ -48,36 +48,6 @@ async function main() {
     // Seed Default Themes
     const defaultThemes = [
         {
-            id: "theme_classic",
-            title: "Classic Elegance",
-            slug: "classic",
-            primaryColor: "#2D3436",
-            secondaryColor: "#636E72",
-            accentColor: "#D63031",
-            backgroundColor: "#FDFDFD",
-            fontFamily: "Playfair Display",
-        },
-        {
-            id: "theme_romantic",
-            title: "Romantic Blush",
-            slug: "romantic",
-            primaryColor: "#5D4037",
-            secondaryColor: "#8D6E63",
-            accentColor: "#EC407A",
-            backgroundColor: "#FFF5F8",
-            fontFamily: "Great Vibes",
-        },
-        {
-            id: "theme_minimal",
-            title: "Modern Minimal",
-            slug: "minimal",
-            primaryColor: "#000000",
-            secondaryColor: "#4A4A4A",
-            accentColor: "#000000",
-            backgroundColor: "#FFFFFF",
-            fontFamily: "Montserrat",
-        },
-        {
             id: "theme_luxury",
             title: "Royal Gold",
             slug: "luxury",
@@ -145,6 +115,26 @@ async function main() {
             secondaryColor: "#f9f7f2",
             accentColor: "#6d1313",
             backgroundColor: "#f9f7f2",
+            fontFamily: "Playfair Display",
+        },
+        {
+            id: "theme_floral_azure",
+            title: "Floral Azure",
+            slug: "floral-azure",
+            primaryColor: "#1A4D94",
+            secondaryColor: "#F5F2ED",
+            accentColor: "#9EB7D9",
+            backgroundColor: "#F5F2ED",
+            fontFamily: "Playfair Display",
+        },
+        {
+            id: "theme_minimal_beige",
+            title: "Minimal Beige",
+            slug: "minimal-beige",
+            primaryColor: "#1A1A1A",
+            secondaryColor: "#F2EBE3",
+            accentColor: "#000000",
+            backgroundColor: "#F2EBE3",
             fontFamily: "Playfair Display",
         }
     ];

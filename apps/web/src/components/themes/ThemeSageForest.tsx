@@ -159,23 +159,23 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             )}
 
             {/* HERO SECTION */}
-            <div className="max-w-md mx-auto pt-4 px-4">
-                <div className="relative rounded-t-[10rem] rounded-b-[4rem] overflow-hidden shadow-2xl bg-[#2d4030]">
-                    {event.image1Url && (
-                        <div className="aspect-[3/4] relative">
-                            <Image src={event.image1Url} className="w-full h-full object-cover brightness-90" alt="Couple" />
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#2d4030]/80" />
-                        </div>
-                    )}
+            <div className="max-w-xl mx-auto pt-4 px-4 sm:px-6">
+                <div className="relative rounded-t-[5rem] sm:rounded-t-[10rem] rounded-b-[2rem] sm:rounded-b-[4rem] overflow-hidden shadow-2xl bg-[#2d4030]">
+                    {/* {event.image1Url && ( */}
+                    <div className="aspect-[3/4] relative">
+                        <Image src={event.image1Url || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80"} fill className="w-full h-full object-cover brightness-90" alt="Couple" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#2d4030]/80" />
+                    </div>
+                    {/* )} */}
 
-                    <div className="absolute bottom-12 left-0 right-0 text-center text-white px-6">
-                        <div className="text-sm uppercase tracking-[0.3em] font-light mb-2 opacity-80">The Wedding of</div>
-                        <div className="text-xs tracking-widest opacity-60 mb-6">
+                    <div className="absolute bottom-8 sm:bottom-12 left-0 right-0 text-center text-white px-6">
+                        <div className="text-xs sm:text-sm uppercase tracking-[0.3em] font-light mb-2 opacity-80">The Wedding of</div>
+                        <div className="text-[10px] sm:text-xs tracking-widest opacity-60 mb-4 sm:mb-6">
                             {new Date(event.eventDate).toLocaleDateString('en-GB').replace(/\//g, ' | ')}
                         </div>
-                        <h1 className="text-4xl sm:text-5xl font-serif font-light leading-tight">
+                        <h1 className="text-3xl sm:text-5xl font-serif font-light leading-tight">
                             {event.groomName} <br />
-                            <span className="text-2xl font-light italic opacity-50">&</span> <br />
+                            <span className="text-xl sm:text-2xl font-light italic opacity-50">&</span> <br />
                             {event.brideName}
                         </h1>
                     </div>
@@ -183,9 +183,9 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             </div>
 
             {/* INVITATION TEXT */}
-            <section className="py-24 px-8 text-center max-w-xl mx-auto">
-                <h2 className="text-3xl font-serif italic mb-8 tracking-wide">Dear family and friends!</h2>
-                <p className="text-lg leading-relaxed opacity-80 italic">
+            <section className="py-16 sm:py-24 px-6 sm:px-8 text-center max-w-xl mx-auto">
+                <h2 className="text-2xl sm:text-3xl font-serif italic mb-6 sm:mb-8 tracking-wide">Dear family and friends!</h2>
+                <p className="text-base sm:text-lg leading-relaxed opacity-80 italic">
                     A special moment for us is coming soon, and we dream of sharing it with those who are truly dear to us.
                     We will be glad to see you at this touching event — our wedding!
                 </p>
@@ -204,6 +204,11 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
                     <div className="space-y-4">
                         <p className="text-lg font-serif italic opacity-70">
                             {event.locationText || 'Secret Garden Venue'}
+                            {(event.locationProvince || event.locationCountry) && (
+                                <span className="block text-xs not-italic uppercase tracking-[0.3em] mt-2 opacity-50">
+                                    {[event.locationProvince, event.locationCountry].filter(Boolean).join(", ")}
+                                </span>
+                            )}
                         </p>
                         {event.googleMapsUrl && (
                             <a
@@ -219,17 +224,17 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             </section>
 
             {/* PROGRAM */}
-            <section className="py-24 px-8 text-center">
+            <section className="py-16 sm:py-24 px-6 sm:px-8 text-center">
                 <div className="max-w-md mx-auto">
-                    <h2 className="text-3xl font-serif italic mb-12 tracking-widest uppercase">Wedding Program</h2>
-                    <div className="space-y-12 relative">
+                    <h2 className="text-2xl sm:text-3xl font-serif italic mb-10 sm:mb-12 tracking-widest uppercase">Wedding Program</h2>
+                    <div className="space-y-10 sm:space-y-12 relative">
                         {/* Centered vertical line */}
                         <div className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-px bg-dashed-border opacity-20" style={{ backgroundImage: 'linear-gradient(to bottom, #2d4030 50%, transparent 50%)', backgroundSize: '1px 8px' }} />
 
                         {sortedSchedules.map((item, idx) => (
                             <div key={idx} className="relative z-10">
-                                <div className="text-xl font-bold mb-1">{item.time}</div>
-                                <div className="text-lg font-serif italic opacity-60">{item.title}</div>
+                                <div className="text-lg sm:text-xl font-bold mb-1">{item.time}</div>
+                                <div className="text-base sm:text-lg font-serif italic opacity-60 leading-tight px-4">{item.title}</div>
                             </div>
                         ))}
                     </div>
@@ -238,15 +243,15 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
 
             {/* DRESS CODE */}
             {event.dressCodeColors && event.dressCodeColors.length > 0 && (
-                <section className="py-24 px-8 bg-[#2d4030] text-[#e8e5dc] text-center">
+                <section className="py-16 sm:py-24 px-6 sm:px-8 bg-[#2d4030] text-[#e8e5dc] text-center">
                     <div className="max-w-md mx-auto">
-                        <h2 className="text-3xl font-serif italic mb-8 tracking-widest uppercase">Dress Code</h2>
-                        <p className="text-sm font-serif italic opacity-60 mb-12">
+                        <h2 className="text-2xl sm:text-3xl font-serif italic mb-6 sm:mb-8 tracking-widest uppercase">Dress Code</h2>
+                        <p className="text-xs sm:text-sm font-serif italic opacity-60 mb-10 sm:mb-12">
                             We would be grateful if you support our wedding color theme:
                         </p>
                         <div className="grid grid-cols-2 gap-4">
                             {event.dressCodeColors.map((color, idx) => (
-                                <div key={idx} className="aspect-square rounded-3xl shadow-xl border-4 border-[#e8e5dc]/10 overflow-hidden" style={{ backgroundColor: color }}>
+                                <div key={idx} className="aspect-square rounded-[1.5rem] sm:rounded-3xl shadow-xl border-4 border-[#e8e5dc]/10 overflow-hidden" style={{ backgroundColor: color }}>
                                     {/* Texture overlay if possible, or just solid */}
                                     {idx === 0 && <div className="w-full h-full opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.2) 100%)' }} />}
                                 </div>
@@ -265,10 +270,10 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             </section>
 
             {event.collectRsvp && (
-                <section className="py-24 px-8 border-t border-black/5 bg-[#fcfcf9]">
+                <section className="py-16 sm:py-24 px-6 sm:px-8 border-t border-black/5 bg-[#fcfcf9]">
                     <div className="max-w-md mx-auto text-center space-y-12">
                         <div className="space-y-4">
-                            <h2 className="text-4xl font-serif italic tracking-tighter">Will you attend?</h2>
+                            <h2 className="text-3xl sm:text-4xl font-serif italic tracking-tighter">Will you attend?</h2>
                             <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">Please respond to our invitation</p>
                         </div>
                         <RsvpForm eventId={event.id} primaryColor="#2d4030" />
@@ -277,13 +282,13 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             )}
 
             {/* FOOTER */}
-            <footer className="py-24 px-8 text-center border-t border-black/5">
+            <footer className="py-16 sm:py-24 px-6 sm:px-8 text-center border-t border-black/5">
                 <div className="flex flex-col items-center gap-6">
                     <Heart className="w-6 h-6 opacity-20 fill-current" />
-                    <div className="text-4xl font-serif italic tracking-tighter">
+                    <div className="text-3xl sm:text-4xl font-serif italic tracking-tighter">
                         {event.groomName} & {event.brideName}
                     </div>
-                    <p className="text-[10px] uppercase tracking-[0.4em] opacity-30 mt-8">Niche E Selection</p>
+                    <p className="text-[10px] uppercase tracking-[0.4em] opacity-30 mt-6 sm:mt-8">Niche E Selection</p>
                 </div>
             </footer>
         </div>

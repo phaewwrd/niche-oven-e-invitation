@@ -10,6 +10,8 @@ const ThemePearlMinimal = dynamic(() => import("./ThemePearlMinimal"));
 const ThemeTropicalParadise = dynamic(() => import("./ThemeTropicalParadise"));
 const ThemeVintageLove = dynamic(() => import("./ThemeVintageLove"));
 const ThemeSweetWine = dynamic(() => import("./ThemeSweetWine"));
+const ThemeFloralAzure = dynamic(() => import("./ThemeFloralAzure"));
+const ThemeMinimalBeige = dynamic(() => import("./ThemeMinimalBeige"));
 
 export type ThemeSlug =
     | "classic"
@@ -18,7 +20,9 @@ export type ThemeSlug =
     | "pearl-minimal"
     | "tropical-paradise"
     | "vintage-love"
-    | "sweet-wine";
+    | "sweet-wine"
+    | "floral-azure"
+    | "minimal-beige";
 
 interface ThemeRegistryProps {
     slug: string;
@@ -42,6 +46,10 @@ export function ThemeRegistry({ slug, ...props }: ThemeRegistryProps) {
             return <ThemeVintageLove {...props} />;
         case "sweet-wine":
             return <ThemeSweetWine {...props} />;
+        case "floral-azure":
+            return <ThemeFloralAzure {...props} />;
+        case "minimal-beige":
+            return <ThemeMinimalBeige {...props} />;
         case "classic":
         default:
             return <ThemeClassic {...props} />;

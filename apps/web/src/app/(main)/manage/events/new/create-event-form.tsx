@@ -12,6 +12,7 @@ import { Plus, Trash2, Calendar as CalendarIcon, MapPin, Quote, Globe, Loader2, 
 import { createEventAction } from "@/app/actions/event";
 import { ImageUploadField } from "@/components/image-upload-field";
 import { ColorPaletteField } from "@/components/color-palette-field";
+import { THAILAND_PROVINCES } from "@/constants/provinces";
 
 export default function CreateEventForm({ userId, themes, subscription }: { userId: string, themes: any[], subscription: any }) {
     const router = useRouter();
@@ -32,6 +33,8 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
             brideName: "",
             eventDate: "",
             locationText: "",
+            locationProvince: "",
+            locationCountry: "Thailand",
             googleMapsUrl: "",
             quote: "",
             slug: "",
@@ -55,7 +58,14 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
 
     const onSubmit = async (data: EventSchema) => {
         try {
-            const result = await createEventAction(data);
+            // Generate Google Maps URL
+            const address = `${data.locationText} ${data.locationProvince} ${data.locationCountry}`;
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+
+            const result = await createEventAction({
+                ...data,
+                googleMapsUrl: mapsUrl
+            });
 
             if (result?.data?.success && result.data.slug) {
                 toast.success("Event created successfully!");
@@ -106,24 +116,37 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                         <Input type="datetime-local" {...register("eventDate")} className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
                         {errors.eventDate && <p className="text-destructive text-xs">{errors.eventDate.message}</p>}
                     </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="space-y-3">
-                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Venué Name</Label>
-                        <Input {...register("locationText")} placeholder="e.g. The Glass House, Grand Hilton" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Venue Name</Label>
+                        <Input {...register("locationText")} placeholder="e.g. The Glass House" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
                         {errors.locationText && <p className="text-destructive text-xs">{errors.locationText.message}</p>}
+                    </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Province MasterData</Label>
+                        <select
+                            {...register("locationProvince")}
+                            className="w-full flex h-14 rounded-2xl border border-border bg-white/50 px-4 py-2 text-lg ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/20 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all cursor-pointer appearance-none"
+                        >
+                            <option value="">Select Province</option>
+                            {THAILAND_PROVINCES.map(province => (
+                                <option key={province} value={province}>{province}</option>
+                            ))}
+                        </select>
+                        {errors.locationProvince && <p className="text-destructive text-xs">{errors.locationProvince.message}</p>}
+                    </div>
+                    <div className="space-y-3">
+                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Country</Label>
+                        <Input {...register("locationCountry")} placeholder="e.g. Thailand" className="py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        {errors.locationCountry && <p className="text-destructive text-xs">{errors.locationCountry.message}</p>}
                     </div>
                 </div>
 
-                {isPaid ? (
-                    <div className="space-y-3">
-                        <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">Navigation Link <span className="bg-secondary/20 text-secondary text-[10px] px-2.5 py-1 rounded-full font-black">CURATED</span></Label>
-                        <div className="relative">
-                            <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary" />
-                            <Input {...register("googleMapsUrl")} placeholder="Paste link from Google Maps" className="py-7 pl-14 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all" />
-                        </div>
-                    </div>
-                ) : (
-                    <div className="p-6 bg-muted/30 rounded-2xl border border-border text-xs font-medium text-muted-foreground flex items-center gap-4 italic">
-                        <div className="bg-white p-2 rounded-lg shadow-sm"><MapPin className="w-4 h-4 text-gray-300" /></div> Upgrade to a curated plan to unlock architectural Google Maps integration.
+                {!isPaid && (
+                    <div className="p-6 bg-muted/30 rounded-2xl border border-border text-xs font-medium text-muted-foreground flex items-center gap-4 italic font-serif">
+                        <div className="bg-white p-2 rounded-lg shadow-sm"><MapPin className="w-4 h-4 text-gray-300" /></div> Note: Premium themes will display a beautifully integrated Google Maps button using these details.
                     </div>
                 )}
             </section>

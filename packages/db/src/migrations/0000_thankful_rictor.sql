@@ -58,6 +58,8 @@ CREATE TABLE "event" (
 	"image2_url" text,
 	"event_date" timestamp NOT NULL,
 	"location_text" text,
+	"location_province" text,
+	"location_country" text,
 	"google_maps_url" text,
 	"quote" text,
 	"dress_code_colors" text[],
