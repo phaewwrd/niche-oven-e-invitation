@@ -61,7 +61,7 @@ export default async function DashboardPage() {
           <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest flex items-center ${subscription?.plan?.name === 'paid' ? 'bg-secondary/20 text-secondary border border-secondary/30' : 'bg-gray-100 text-gray-500 border border-gray-200'}`}>
             {subscription?.plan?.name || 'Free'} Plan
           </span>
-          <a href="/manage/events/new" className="bg-primary text-primary-foreground px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-primary/10 hover:brightness-110 transition-all active:scale-95">
+          <a href="/manage/events/new/theme" className="bg-primary text-primary-foreground px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-primary/10 hover:brightness-110 transition-all active:scale-95">
             Create Event
           </a>
         </div>

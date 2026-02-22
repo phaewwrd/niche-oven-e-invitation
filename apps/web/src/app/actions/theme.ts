@@ -36,6 +36,7 @@ export async function createThemeAction(data: any) {
 
         revalidatePath("/admin/themes");
         revalidatePath("/manage/events/new");
+        revalidatePath("/manage/events/new/theme");
         return { success: true, id: themeId };
     } catch (error: any) {
         console.error("Theme creation error:", error);

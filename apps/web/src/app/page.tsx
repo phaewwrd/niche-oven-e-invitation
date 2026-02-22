@@ -45,7 +45,7 @@ export default async function Home() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300">
-                    <Link href="/manage/events/new" className="w-full sm:w-auto">
+                    <Link href="/manage/events/new/theme" className="w-full sm:w-auto">
                         <Button className="w-full sm:w-auto py-8 px-10 text-xl font-black rounded-2xl bg-secondary hover:brightness-110 text-primary shadow-2xl shadow-secondary/40 border-none transform hover:scale-105 active:scale-95 transition-all">
                             Start Designing
                             <ArrowRight className="ml-2 w-6 h-6" />

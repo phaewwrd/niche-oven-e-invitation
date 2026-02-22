@@ -18,7 +18,7 @@ export default function ManageDashboard({ session, events, subscription }: Manag
           <PlusCircle className="w-12 h-12 text-gray-400 mb-4" />
           <h3 className="text-xl font-semibold mb-2">No invitations yet</h3>
           <p className="text-gray-500 mb-6">Start by creating your first digital wedding invitation.</p>
-          <a href="/manage/events/new" className="bg-primary text-primary-foreground px-8 py-3.5 rounded-2xl font-bold shadow-xl shadow-primary/10 hover:brightness-110 transition-all flex items-center gap-2 active:scale-95">
+          <a href="/manage/events/new/theme" className="bg-primary text-primary-foreground px-8 py-3.5 rounded-2xl font-bold shadow-xl shadow-primary/10 hover:brightness-110 transition-all flex items-center gap-2 active:scale-95">
             <PlusCircle className="w-5 h-5" />
             Create Now
           </a>

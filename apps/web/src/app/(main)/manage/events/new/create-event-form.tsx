@@ -8,13 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2, Calendar as CalendarIcon, MapPin, Quote, Globe, Loader2, Sparkles, Image as ImageIcon, Camera } from "lucide-react";
+import { Plus, Trash2, Calendar as CalendarIcon, MapPin, Quote, Globe, Loader2, Sparkles, Image as ImageIcon, Camera, ArrowRight, Check } from "lucide-react";
+import Link from "next/link";
 import { createEventAction } from "@/app/actions/event";
 import { ImageUploadField } from "@/components/image-upload-field";
 import { ColorPaletteField } from "@/components/color-palette-field";
 import { THAILAND_PROVINCES } from "@/constants/provinces";
 
-export default function CreateEventForm({ userId, themes, subscription }: { userId: string, themes: any[], subscription: any }) {
+export default function CreateEventForm({ userId, themes, subscription, initialThemeId }: { userId: string, themes: any[], subscription: any, initialThemeId?: string }) {
     const router = useRouter();
     const isPaid = subscription?.plan?.name === 'paid';
     const maxSchedules = subscription?.plan?.maxSchedule || 4;
@@ -38,7 +39,7 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
             googleMapsUrl: "",
             quote: "",
             slug: "",
-            themeId: themes[0]?.id || "",
+            themeId: initialThemeId || themes[0]?.id || "",
             image1Url: "",
             image2Url: "",
             dressCodeColors: [],
@@ -181,28 +182,40 @@ export default function CreateEventForm({ userId, themes, subscription }: { user
                 isPaid={isPaid}
             />
 
-            {/* Theme Selection */}
-            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
-                <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
-                        <ImageIcon className="w-5 h-5" />
+            {/* Theme Selection - Visually Locked */}
+            <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8 relative overflow-hidden group">
+                <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
+                            <ImageIcon className="w-5 h-5" />
+                        </div>
+                        <h2 className="text-2xl font-serif font-black italic">Aesthetic Theme</h2>
                     </div>
-                    <h2 className="text-2xl font-serif font-black italic">Aesthetic Theme</h2>
+                    <Link href="/manage/events/new/theme" className="text-xs font-bold uppercase tracking-widest text-secondary hover:text-primary transition-colors flex items-center gap-2 group-hover:translate-x-1 transition-all">
+                        Change Theme <ArrowRight className="w-4 h-4" />
+                    </Link>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {themes.map(theme => (
-                        <div
-                            key={theme.id}
-                            onClick={() => setValue("themeId", theme.id)}
-                            className={`group cursor-pointer rounded-3xl border-2 p-4 transition-all duration-500 ${selectedThemeId === theme.id ? 'border-secondary bg-secondary/5 ring-4 ring-secondary/10 shadow-xl' : 'border-border hover:border-secondary/30 bg-white'}`}
-                        >
-                            <div className="aspect-[4/5] bg-muted/30 rounded-2xl mb-4 flex items-center justify-center font-bold overflow-hidden shadow-inner">
-                                <div style={{ backgroundColor: theme.primaryColor }} className="w-full h-full opacity-40 transition-transform duration-700 group-hover:scale-110"></div>
+
+                <div className="flex items-center gap-6 p-6 bg-secondary/5 rounded-2xl border-2 border-secondary/20">
+                    {themes.filter(t => t.id === selectedThemeId).map(theme => (
+                        <div key={theme.id} className="flex items-center gap-6 w-full">
+                            <div className="w-20 h-28 bg-white rounded-xl shadow-sm border border-border overflow-hidden p-2 flex flex-col">
+                                <div className="flex-1 rounded-sm opacity-40 border-2 border-dashed" style={{ borderColor: theme.primaryColor, backgroundColor: theme.backgroundColor }} />
+                                <div className="h-1 w-full mt-2 rounded-full" style={{ backgroundColor: theme.primaryColor }} />
                             </div>
-                            <p className="text-center font-black uppercase tracking-widest text-[10px] text-primary truncate">{theme.title}</p>
+                            <div className="flex-1">
+                                <h3 className="text-lg font-black uppercase tracking-tight">{theme.title}</h3>
+                                <p className="text-sm text-muted-foreground font-serif italic">Your invitation will be styled with this aesthetic.</p>
+                            </div>
+                            <div className="bg-secondary text-white p-2 rounded-full shadow-lg">
+                                <Check className="w-5 h-5" />
+                            </div>
                         </div>
                     ))}
                 </div>
+
+                {/* Hidden grid to maintain form state if needed, or just avoid rendering it */}
+                <input type="hidden" {...register("themeId")} />
             </section>
 
             {/* Schedule Section */}
