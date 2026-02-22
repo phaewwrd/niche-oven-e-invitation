@@ -2,6 +2,7 @@
 import type { authClient } from "@/lib/auth-client";
 import type { Event, UserSubscription } from "@niche-e-invitation/db/schema/business";
 import { PlusCircle, ExternalLink, Calendar, Edit3, Users } from "lucide-react";
+import Image from "next/image";
 
 interface ManageDashboardProps {
   session: typeof authClient.$Infer.Session;
@@ -28,7 +29,7 @@ export default function ManageDashboard({ session, events, subscription }: Manag
             <div key={event.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
               <div className="aspect-video bg-gray-100 relative overflow-hidden">
                 {event.image1Url ? (
-                  <img src={event.image1Url} alt={event.groomName} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                  <Image src={event.image1Url} alt={event.groomName} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-400 font-mono italic">No Image</div>
                 )}

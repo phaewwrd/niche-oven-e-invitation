@@ -4,6 +4,7 @@ import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/busin
 import { MapPin, Heart, Quote as QuoteIcon, ChevronDown, Palette } from "lucide-react";
 import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface ThemeProps {
     event: Event;
@@ -114,7 +115,7 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
             {event.image1Url && (
                 <section className={`relative mx-auto max-w-5xl px-4 sm:px-6 transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
                     <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[16/10]">
-                        <img src={event.image1Url} alt={`${event.groomName} & ${event.brideName}`} className="w-full h-full object-cover" />
+                        <Image src={event.image1Url} alt={`${event.groomName} & ${event.brideName}`} className="w-full h-full object-cover" />
                         <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, transparent 60%, var(--t-bg))` }} />
                     </div>
                 </section>
@@ -173,7 +174,7 @@ export default function ThemeClassic({ event, theme, schedules, isExpired }: The
             {event.image2Url && (
                 <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-20">
                     <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3]">
-                        <img src={event.image2Url} alt={`${event.groomName} & ${event.brideName} — portrait`} className="w-full h-full object-cover" />
+                        <Image src={event.image2Url} alt={`${event.groomName} & ${event.brideName} — portrait`} className="w-full h-full object-cover" />
                     </div>
                 </section>
             )}

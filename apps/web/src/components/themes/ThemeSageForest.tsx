@@ -4,6 +4,7 @@ import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/busin
 import { MapPin, Heart, Calendar as CalendarIcon, Clock } from "lucide-react";
 import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface ThemeProps {
     event: Event;
@@ -162,7 +163,7 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
                 <div className="relative rounded-t-[10rem] rounded-b-[4rem] overflow-hidden shadow-2xl bg-[#2d4030]">
                     {event.image1Url && (
                         <div className="aspect-[3/4] relative">
-                            <img src={event.image1Url} className="w-full h-full object-cover brightness-90" alt="Couple" />
+                            <Image src={event.image1Url} className="w-full h-full object-cover brightness-90" alt="Couple" />
                             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#2d4030]/80" />
                         </div>
                     )}

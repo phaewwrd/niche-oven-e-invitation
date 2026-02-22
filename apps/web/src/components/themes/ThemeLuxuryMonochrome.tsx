@@ -167,7 +167,7 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
             {/* 5. IMAGE BREAK */}
             {event.image2Url && (
                 <section className="h-[80vh] w-full bg-black">
-                    <img src={event.image2Url} className="w-full h-full object-cover grayscale opacity-80" alt="Detail" />
+                    <Image src={event.image2Url} className="w-full h-full object-cover grayscale opacity-80" alt="Detail" />
                 </section>
             )}
 
@@ -200,10 +200,10 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
                     <h2 className="text-3xl font-serif font-black italic uppercase mb-12 tracking-widest">DLYA VDOHNOVENIYA</h2>
                     <div className="grid grid-cols-2 gap-8 lg:gap-12">
                         <div className="aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500">
-                            {event.image1Url && <img src={event.image1Url} className="w-full h-full object-cover grayscale" />}
+                            {event.image1Url && <Image alt="Inspiration 1" src={event.image1Url} className="w-full h-full object-cover grayscale" />}
                         </div>
                         <div className="aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500 mt-12">
-                            {event.image2Url && <img src={event.image2Url} className="w-full h-full object-cover grayscale" />}
+                            {event.image2Url && <Image alt="Inspiration 2" src={event.image2Url} className="w-full h-full object-cover grayscale" />}
                         </div>
                     </div>
                 </div>

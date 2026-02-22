@@ -4,6 +4,7 @@ import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/busin
 import { MapPin, Heart, Clock, Camera, Utensils, Music, GlassWater, Gift } from "lucide-react";
 import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface ThemeProps {
     event: Event;
@@ -103,7 +104,7 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
                 {event.image1Url && (
                     <div className="max-w-[280px] mx-auto mb-10">
                         <div className="aspect-[3/4] rounded-full overflow-hidden border-[12px] border-white shadow-sm">
-                            <img src={event.image1Url} className="w-full h-full object-cover" alt="Couple" />
+                            <Image src={event.image1Url} className="w-full h-full object-cover" alt="Couple" />
                         </div>
                     </div>
                 )}
@@ -128,7 +129,7 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
                 </p>
                 {event.image2Url && (
                     <div className="mt-12 rounded-2xl overflow-hidden shadow-sm aspect-video">
-                        <img src={event.image2Url} className="w-full h-full object-cover" alt="Detail" />
+                        <Image src={event.image2Url} className="w-full h-full object-cover" alt="Detail" />
                     </div>
                 )}
             </section>
