@@ -71,7 +71,7 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
 
                 <div className="relative min-h-[50vh] md:min-h-screen overflow-hidden">
                     <Image
-                        src={event.image1Url || "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80"}
+                        src={event.image1Url || theme.image1Url || ""}
                         alt="Background"
                         fill
                         className="object-cover"
@@ -116,7 +116,7 @@ export default function ThemeVintageLove({ event, theme, schedules }: ThemeProps
             {/* Visual Break */}
             <section className="min-h-[60vh] py-12 relative overflow-hidden flex items-center justify-center">
                 <Image
-                    src={event.image2Url || "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80"}
+                    src={event.image2Url || theme.image2Url || ""}
                     alt="Atmospheric"
                     fill
                     className="object-cover fixed"

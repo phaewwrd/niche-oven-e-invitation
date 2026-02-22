@@ -74,7 +74,7 @@ export default function ThemeSweetWine({ event, theme, schedules }: ThemeProps) 
             <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 gap-3 sm:gap-4 mb-20 sm:mb-24">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-sm hover:-translate-y-1 transition-transform duration-500">
                     <Image
-                        src={event.image1Url || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80"}
+                        src={event.image1Url || theme.image1Url || ""}
                         alt="Portrait 1"
                         fill
                         className="object-cover"
@@ -82,7 +82,7 @@ export default function ThemeSweetWine({ event, theme, schedules }: ThemeProps) 
                 </div>
                 <div className="relative aspect-[3/4] overflow-hidden rounded-sm hover:-translate-y-1 transition-transform duration-500 delay-75">
                     <Image
-                        src={event.image2Url || "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80"}
+                        src={event.image2Url || theme.image2Url || ""}
                         alt="Portrait 2"
                         fill
                         className="object-cover"

@@ -77,7 +77,7 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
             <header className="relative h-screen w-full overflow-hidden">
                 <div className="absolute inset-0">
                     <Image
-                        src={event.image1Url || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80"}
+                        src={event.image1Url || theme.image1Url || ""}
                         fill
                         alt="Wedding Hero"
                         className="w-full h-full object-cover filter grayscale brightness-75 transition-transform duration-[10s] ease-linear scale-110"
@@ -171,7 +171,7 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
 
             {/* 5. IMAGE BREAK */}
             <section className="h-[80vh] w-full bg-black">
-                <Image src={event.image2Url || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80"} fill className="w-full h-full object-cover grayscale opacity-80" alt="Detail" />
+                <Image src={event.image2Url || theme.image2Url || ""} fill className="w-full h-full object-cover grayscale opacity-80" alt="Detail" />
             </section>
 
             {/* 6. DRESS CODE */}
@@ -203,10 +203,10 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
                     <h2 className="text-2xl sm:text-3xl font-serif font-black italic uppercase mb-10 sm:mb-12 tracking-widest">DLYA VDOHNOVENIYA</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12">
                         <div className="aspect-[3/4] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl transform sm:-rotate-2 hover:rotate-0 transition-transform duration-500">
-                            <Image alt="Inspiration 1" fill src={event.image1Url || "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80"} className="w-full h-full object-cover grayscale" />
+                            <Image alt="Inspiration 1" fill src={event.image1Url || theme.image1Url || ""} className="w-full h-full object-cover grayscale" />
                         </div>
                         <div className="aspect-[3/4] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl transform sm:rotate-2 hover:rotate-0 transition-transform duration-500 sm:mt-12">
-                            <Image alt="Inspiration 2" fill src={event.image2Url || "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80"} className="w-full h-full object-cover grayscale" />
+                            <Image alt="Inspiration 2" fill src={event.image2Url || theme.image2Url || ""} className="w-full h-full object-cover grayscale" />
                         </div>
                     </div>
                 </div>

@@ -162,9 +162,9 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             <div className="max-w-xl mx-auto pt-4 px-4 sm:px-6">
                 <div className="relative rounded-t-[5rem] sm:rounded-t-[10rem] rounded-b-[2rem] sm:rounded-b-[4rem] overflow-hidden shadow-2xl bg-[#2d4030]">
                     {/* {event.image1Url && ( */}
-                    <div className="aspect-[3/4] relative">
-                        <Image src={event.image1Url || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80"} fill className="w-full h-full object-cover brightness-90" alt="Couple" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#2d4030]/80" />
+                    <div className="aspect-3/4 relative">
+                        <Image src={event.image1Url || theme.image1Url || ""} fill className="w-full h-full object-cover brightness-90" alt="Couple" />
+                        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#2d4030]/80" />
                     </div>
                     {/* )} */}
 
@@ -221,6 +221,20 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
                         )}
                     </div>
                 </div>
+            </section>
+
+            <section className=" px-6 sm:px-8 text-center">
+                 {/* {event.image1Url && ( */}
+                    <div className="aspect-3/4 relative">
+                        <Image src={event.image2Url || theme.image2Url || ""} fill className="w-full h-full object-cover brightness-90" alt="Couple" />
+                        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#2d4030]/80" />
+                    </div>
+                <div className="max-w-md mx-auto mt-5">
+                    <p className="text-base sm:text-lg leading-relaxed opacity-80 italic mb-10">
+                        We have planned a wonderful day filled with love, laughter, and unforgettable moments. Here's a glimpse of our schedule:
+                    </p>
+                </div>
+                <div className="h-5 bg-[#f2f0eb]"></div>
             </section>
 
             {/* PROGRAM */}

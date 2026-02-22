@@ -86,11 +86,11 @@ export default function ThemeFloralAzure({ event, theme, schedules, isExpired }:
                         <span className="block">{event.brideName}</span>
                     </h1>
 
-                    {event.image1Url && (
+                    {(event.image1Url || theme.image1Url) && (
                         <div className={`mt-12 relative mx-auto w-full max-w-sm transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
                             <div className="aspect-[3/4] rounded-t-full overflow-hidden border-[12px] border-white shadow-xl">
                                 <Image
-                                    src={event.image1Url}
+                                    src={event.image1Url || theme.image1Url || ""}
                                     alt={`${event.groomName} & ${event.brideName}`}
                                     className="w-full h-full object-cover"
                                     width={800}

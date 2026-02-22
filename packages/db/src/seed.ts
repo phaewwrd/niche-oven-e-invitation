@@ -136,6 +136,26 @@ async function main() {
             accentColor: "#000000",
             backgroundColor: "#F2EBE3",
             fontFamily: "Playfair Display",
+        },
+        {
+            id: "theme_crystal_winter",
+            title: "Crystal Winter",
+            slug: "crystal-winter",
+            primaryColor: "#5D7A8C",
+            secondaryColor: "#FFFFFF",
+            accentColor: "#B8C6CF",
+            backgroundColor: "#F0F4F7",
+            fontFamily: "Playfair Display",
+        },
+        {
+            id: "theme_scrapbook_nature",
+            title: "Scrapbook Nature",
+            slug: "scrapbook-nature",
+            primaryColor: "#53644B",
+            secondaryColor: "#F7F1E5",
+            accentColor: "#D3B99F",
+            backgroundColor: "#F7F1E5",
+            fontFamily: "Comic Sans MS",
         }
     ];
 

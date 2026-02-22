@@ -103,7 +103,7 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
 
                 <div className="max-w-[240px] sm:max-w-[280px] mx-auto mb-10">
                     <div className="aspect-[3/4] rounded-full overflow-hidden border-[10px] sm:border-[12px] border-white shadow-sm">
-                        <Image src={event.image1Url || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80"} fill className="w-full h-full object-cover" alt="Couple" />
+                        <Image src={event.image1Url || theme.image1Url || ""} fill className="w-full h-full object-cover" alt="Couple" />
                     </div>
                 </div>
 
@@ -126,7 +126,7 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
                     This day will be special for us! With great joy and love, we invite you to our wedding.
                 </p>
                 <div className="mt-10 sm:mt-12 rounded-2xl overflow-hidden shadow-sm aspect-video">
-                    <Image src={event.image2Url || "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80"} fill className="w-full h-full object-cover" alt="Detail" />
+                    <Image src={event.image2Url || theme.image2Url || ""} fill className="w-full h-full object-cover" alt="Detail" />
                 </div>
             </section>
 

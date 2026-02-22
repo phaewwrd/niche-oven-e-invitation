@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Check } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function ChooseThemePage() {
     const session = await auth.api.getSession({
@@ -39,20 +40,31 @@ export default async function ChooseThemePage() {
                         className="group relative flex flex-col space-y-4"
                     >
                         <div className="aspect-[3/4] rounded-[2rem] overflow-hidden border-4 border-transparent bg-white shadow-xl transition-all duration-500 group-hover:border-secondary group-hover:scale-[1.02] group-hover:shadow-2xl relative">
-                            {/* Theme Preview Mockup */}
-                            <div className="w-full h-full p-6 flex flex-col transition-transform duration-700 group-hover:scale-110" style={{ backgroundColor: theme.backgroundColor }}>
-                                <div className="h-2 w-12 rounded-full mb-4 opacity-20" style={{ backgroundColor: theme.primaryColor }} />
-                                <div className="space-y-2 mb-8">
-                                    <div className="h-6 w-3/4 rounded-lg" style={{ backgroundColor: theme.primaryColor, opacity: 0.8 }} />
-                                    <div className="h-6 w-1/2 rounded-lg" style={{ backgroundColor: theme.primaryColor, opacity: 0.8 }} />
+                            {/* Theme Preview Image or Mockup */}
+                            {theme.previewImageUrl ? (
+                                <div className="relative w-full h-full">
+                                    <Image
+                                        src={theme.previewImageUrl}
+                                        alt={theme.title}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
                                 </div>
-                                <div className="flex-1 rounded-2xl border-4 border-dashed opacity-10" style={{ borderColor: theme.primaryColor }} />
-                                <div className="mt-6 flex gap-2">
-                                    <div className="w-8 h-8 rounded-full shadow-sm" style={{ backgroundColor: theme.primaryColor }} />
-                                    <div className="w-8 h-8 rounded-full shadow-sm" style={{ backgroundColor: theme.secondaryColor }} />
-                                    <div className="w-8 h-8 rounded-full shadow-sm" style={{ backgroundColor: theme.accentColor }} />
+                            ) : (
+                                <div className="w-full h-full p-6 flex flex-col transition-transform duration-700 group-hover:scale-110" style={{ backgroundColor: theme.backgroundColor }}>
+                                    <div className="h-2 w-12 rounded-full mb-4 opacity-20" style={{ backgroundColor: theme.primaryColor }} />
+                                    <div className="space-y-2 mb-8">
+                                        <div className="h-6 w-3/4 rounded-lg" style={{ backgroundColor: theme.primaryColor, opacity: 0.8 }} />
+                                        <div className="h-6 w-1/2 rounded-lg" style={{ backgroundColor: theme.primaryColor, opacity: 0.8 }} />
+                                    </div>
+                                    <div className="flex-1 rounded-2xl border-4 border-dashed opacity-10" style={{ borderColor: theme.primaryColor }} />
+                                    <div className="mt-6 flex gap-2">
+                                        <div className="w-8 h-8 rounded-full shadow-sm" style={{ backgroundColor: theme.primaryColor }} />
+                                        <div className="w-8 h-8 rounded-full shadow-sm" style={{ backgroundColor: theme.secondaryColor }} />
+                                        <div className="w-8 h-8 rounded-full shadow-sm" style={{ backgroundColor: theme.accentColor }} />
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             {/* Hover Overlay */}
                             <div className="absolute inset-0 bg-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">

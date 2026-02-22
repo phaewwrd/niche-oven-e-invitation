@@ -60,7 +60,7 @@ export default function ThemeTropicalParadise({ event, theme, schedules }: Theme
             {/* Hero Section */}
             <div className="relative h-[70vh] sm:h-[80vh] md:h-[85vh] overflow-hidden">
                 <Image
-                    src={event.image1Url || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80"}
+                    src={event.image1Url || theme.image1Url || ""}
                     alt="Tropical Paradise"
                     fill
                     className="object-cover"
@@ -74,7 +74,7 @@ export default function ThemeTropicalParadise({ event, theme, schedules }: Theme
                         <div className="bg-white p-3 sm:p-4 pb-10 sm:pb-12 shadow-2xl rounded-sm">
                             <div className="relative aspect-square w-56 sm:w-80 md:w-96 overflow-hidden bg-gray-100">
                                 <Image
-                                    src={event.image2Url || "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80"}
+                                    src={event.image2Url || theme.image2Url || ""}
                                     alt="Couple"
                                     fill
                                     className="object-cover"

@@ -60,10 +60,10 @@ export default function ThemeMinimalBeige({ event, theme, schedules, isExpired }
                     </h1>
                 </div>
 
-                {event.image1Url && (
+                {(event.image1Url || theme.image1Url) && (
                     <div className="absolute inset-0 z-0">
                         <Image
-                            src={event.image1Url}
+                            src={event.image1Url || theme.image1Url || ""}
                             alt="Header Background"
                             fill
                             className="object-cover opacity-20 grayscale"
@@ -91,11 +91,11 @@ export default function ThemeMinimalBeige({ event, theme, schedules, isExpired }
                 </section>
 
                 {/* Portrait Display */}
-                {event.image2Url && (
+                {(event.image2Url || theme.image2Url) && (
                     <section className="relative overflow-hidden group">
                         <div className="aspect-[4/5] relative overflow-hidden bg-black/5">
                             <Image
-                                src={event.image2Url}
+                                src={event.image2Url || theme.image2Url || ""}
                                 alt="Portrait"
                                 fill
                                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
