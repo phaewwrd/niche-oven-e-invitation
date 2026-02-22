@@ -1,9 +1,10 @@
 "use client";
 
 import type { Event, Theme, Schedule } from "@niche-e-invitation/db/schema/business";
-import { MapPin, Heart, Clock, Quote as QuoteIcon, Calendar, Palette } from "lucide-react";
+import { Heart } from "lucide-react";
 import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface ThemeProps {
     event: Event;
@@ -76,7 +77,7 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
             <header className="relative h-screen w-full overflow-hidden">
                 <div className="absolute inset-0">
                     {event.image1Url ? (
-                        <img
+                        <Image
                             src={event.image1Url}
                             alt="Wedding Hero"
                             className="w-full h-full object-cover filter grayscale brightness-75 transition-transform duration-[10s] ease-linear scale-110"
