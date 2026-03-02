@@ -98,7 +98,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
             <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900">Continue with Google</span>
           </button>
 
-          <button
+          {/* <button
             type="button"
             onClick={() =>
               authClient.signIn.social({
@@ -110,7 +110,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
           >
             <FacebookIcon />
             <span className="text-sm font-semibold text-gray-700 group-hover:text-[#1877F2]">Continue with Facebook</span>
-          </button>
+          </button> */}
         </div>
 
         {/* Divider */}

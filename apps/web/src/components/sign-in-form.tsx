@@ -19,11 +19,6 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const FacebookIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2" />
-  </svg>
-);
 
 const MailIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -95,7 +90,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
             <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900">Continue with Google</span>
           </button>
 
-          <button
+          {/* <button
             type="button"
             onClick={() =>
               authClient.signIn.social({
@@ -107,7 +102,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
           >
             <FacebookIcon />
             <span className="text-sm font-semibold text-gray-700 group-hover:text-[#1877F2]">Continue with Facebook</span>
-          </button>
+          </button> */}
         </div>
 
         {/* Divider */}
