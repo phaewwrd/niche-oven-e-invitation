@@ -4,11 +4,14 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 
 export const auth = betterAuth({
+  baseURL: process.env.BETTER_AUTH_BASE_URL,
+  secret: process.env.BETTER_AUTH_SECRET,
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
-  secret: process.env.BETTER_AUTH_SECRET,
-  trustedOrigins: [process.env.BASE_URL || "http://localhost:3000"],
+
+  trustedOrigins: [process.env.BETTER_AUTH_BASE_URL!],
+
   user: {
     additionalFields: {
       role: {
@@ -17,9 +20,11 @@ export const auth = betterAuth({
       },
     },
   },
+
   emailAndPassword: {
     enabled: true,
   },
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -30,5 +35,6 @@ export const auth = betterAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     },
   },
+
   plugins: [nextCookies()],
 });
