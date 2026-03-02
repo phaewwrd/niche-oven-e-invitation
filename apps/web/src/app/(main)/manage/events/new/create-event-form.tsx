@@ -72,7 +72,8 @@ export default function CreateEventForm({ userId, themes, subscription, initialT
 
             if (result?.data?.success && result.data.slug) {
                 toast.success("Event created successfully!");
-                router.push(`/invitation/${result.data.slug}`);
+                window.open(`/invitation/${result.data.slug}`, "_blank");
+                router.push("/manage");
             } else {
                 toast.error(result?.serverError || "Failed to create event");
             }

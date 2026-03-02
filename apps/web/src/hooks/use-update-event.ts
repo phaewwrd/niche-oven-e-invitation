@@ -22,10 +22,9 @@ export function useUpdateEvent(eventId: string, userId: string) {
             toast.success("Event updated successfully!");
             queryClient.invalidateQueries({ queryKey: ["event", eventId] });
             if (data?.slug) {
-                router.push(`/invitation/${data.slug}`);
-            } else {
-                router.push("/manage");
+                window.open(`/invitation/${data.slug}`, "_blank");
             }
+            router.push("/manage");
         },
         onError: (error: any) => {
             toast.error(error.message || "Failed to update event");
