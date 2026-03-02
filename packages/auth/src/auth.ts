@@ -8,7 +8,7 @@ export const auth = betterAuth({
     provider: "pg",
   }),
   secret: process.env.BETTER_AUTH_SECRET,
-  trustedOrigins: [process.env.BETTER_AUTH_BASE_URL || "http://localhost:3000"],
+  trustedOrigins: [process.env.BASE_URL || "http://localhost:3000"],
   user: {
     additionalFields: {
       role: {
