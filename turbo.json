@@ -13,6 +13,18 @@
       "outputs": [
         "dist/**",
         ".next/**"
+      ],
+      "env": [
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_BASE_URL",
+        "CLOUDINARY_CLOUD_NAME",
+        "CLOUDINARY_API_KEY",
+        "CLOUDINARY_API_SECRET",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "FACEBOOK_CLIENT_ID",
+        "FACEBOOK_CLIENT_SECRET",
+        "NEXTAUTH_SECRET"
       ]
     },
     "lint": {
@@ -51,6 +63,6 @@
     },
     "db:seed": {
       "cache": false
-    }
+    },
   }
 }
