@@ -14,6 +14,8 @@ import { createEventAction } from "@/app/actions/event";
 import { ImageUploadField } from "@/components/image-upload-field";
 import { ColorPaletteField } from "@/components/color-palette-field";
 import { THAILAND_PROVINCES } from "@/constants/provinces";
+import { ThemeSelector } from "@/components/theme-selector";
+import Image from "next/image";
 
 export default function CreateEventForm({ userId, themes, subscription, initialThemeId }: { userId: string, themes: any[], subscription: any, initialThemeId?: string }) {
     const router = useRouter();
@@ -196,23 +198,19 @@ export default function CreateEventForm({ userId, themes, subscription, initialT
                     </Link>
                 </div>
 
-                <div className="flex items-center gap-4 sm:gap-6 p-4 sm:p-6 bg-secondary/5 rounded-2xl border-2 border-secondary/20">
-                    {themes.filter(t => t.id === selectedThemeId).map(theme => (
-                        <div key={theme.id} className="flex items-center gap-4 sm:gap-6 w-full">
-                            <div className="w-16 h-24 sm:w-20 sm:h-28 bg-white rounded-xl shadow-sm border border-border overflow-hidden p-2 flex flex-col shrink-0">
-                                <div className="flex-1 rounded-sm opacity-40 border-2 border-dashed" style={{ borderColor: theme.primaryColor, backgroundColor: theme.backgroundColor }} />
-                                <div className="h-1 w-full mt-2 rounded-full" style={{ backgroundColor: theme.primaryColor }} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <h3 className="text-base sm:text-lg font-black uppercase tracking-tight truncate">{theme.title}</h3>
-                                <p className="text-xs text-muted-foreground font-serif italic line-clamp-2">Your invitation will be styled with this aesthetic.</p>
-                            </div>
-                            <div className="bg-secondary text-white p-2 rounded-full shadow-lg shrink-0">
-                                <Check className="w-4 h-4 sm:w-5 sm:h-5" />
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <ThemeSelector
+                    themes={themes.filter(t => t.id === selectedThemeId).map(theme => ({
+                        id: theme.id,
+                        title: theme.title,
+                        previewImageUrl: theme.previewImageUrl,
+                        primaryColor: theme.primaryColor,
+                        backgroundColor: theme.backgroundColor,
+                        secondaryColor: theme.secondaryColor,
+                        accentColor: theme.accentColor
+                    }))}
+                    selectedThemeId={selectedThemeId}
+                    mode="select"
+                />
 
                 {/* Hidden grid to maintain form state if needed, or just avoid rendering it */}
                 <input type="hidden" {...register("themeId")} />

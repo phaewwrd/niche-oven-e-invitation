@@ -13,6 +13,7 @@ import { ImageUploadField } from "@/components/image-upload-field";
 import { ColorPaletteField } from "@/components/color-palette-field";
 import { THAILAND_PROVINCES } from "@/constants/provinces";
 import Image from "next/image";
+import { ThemeSelector } from "@/components/theme-selector";
 
 interface EditEventFormProps {
     userId: string;
@@ -188,40 +189,20 @@ export default function EditEventForm({ userId, eventId, initialData, themes, su
                     </div>
                     <h2 className="text-xl sm:text-2xl font-serif font-black italic">Aesthetic Theme</h2>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    {themes.map(theme => (
-                        <div
-                            key={theme.id}
-                            onClick={() => setValue("themeId", theme.id)}
-                            className={`group cursor-pointer rounded-[2rem] border-2 p-3 sm:p-4 transition-all duration-500 ${selectedThemeId === theme.id
-                                ? 'border-secondary bg-secondary/5 ring-4 ring-secondary/10 shadow-xl'
-                                : 'border-border hover:border-secondary/30 bg-white'
-                                }`}
-                        >
-                            <div className="relative aspect-[4/5] bg-muted/30 rounded-2xl mb-3 sm:mb-4 overflow-hidden shadow-inner">
-
-                                {theme.previewImageUrl ? (
-                                    <Image
-                                        src={theme.previewImageUrl}
-                                        alt={theme.title}
-                                        fill
-                                        className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                ) : (
-                                    <div
-                                        style={{ backgroundColor: theme.primaryColor }}
-                                        className="w-full h-full opacity-40 transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                )}
-
-                            </div>
-
-                            <p className="text-center font-black uppercase tracking-widest text-[9px] sm:text-[10px] text-primary truncate">
-                                {theme.title}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+                <ThemeSelector
+                    themes={themes.map(theme => ({
+                        id: theme.id,
+                        title: theme.title,
+                        previewImageUrl: theme.previewImageUrl,
+                        primaryColor: theme.primaryColor,
+                        backgroundColor: theme.backgroundColor,
+                        secondaryColor: theme.secondaryColor,
+                        accentColor: theme.accentColor
+                    }))}
+                    selectedThemeId={selectedThemeId}
+                    onSelect={(themeId) => setValue("themeId", themeId)}
+                    mode="select"
+                />
             </section>
 
             {/* Schedule Section */}
