@@ -1,7 +1,8 @@
+import { subscriptionRepository } from "@/repositories/subscription-repository";
+import { themeRepository } from "@/repositories/theme-repository";
 import { db } from "@niche-e-invitation/db";
-import { event, theme, schedule } from "@niche-e-invitation/db/schema/business";
+import { event } from "@niche-e-invitation/db/schema/business";
 import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
 
 export async function getInvitationBySlug(slug: string) {
     const result = await db.query.event.findFirst({
@@ -16,21 +17,13 @@ export async function getInvitationBySlug(slug: string) {
         return null;
     }
 
-    // Check if expired
-    if (new Date() > new Date(result.expiresAt)) {
-        return null; // Should return 404 in page
-    }
+    const isExpired = new Date() > new Date(result.expiresAt);
 
-    return result;
+    return { ...result, isExpired };
 }
 
 export async function getActiveSubscription(userId: string) {
-    return await db.query.userSubscription.findFirst({
-        where: (sub, { eq, gt }) => eq(sub.userId, userId) && gt(sub.expiresAt, new Date()),
-        with: {
-            plan: true,
-        },
-    });
+    return await subscriptionRepository.findActiveByUserId(userId);
 }
 
 export async function getUserEvents(userId: string) {
@@ -44,5 +37,13 @@ export async function getUserEvents(userId: string) {
 }
 
 export async function getPlans() {
-    return await db.query.plan.findMany();
+    return await subscriptionRepository.findAllPlans();
+}
+
+export async function getThemes() {
+    return await themeRepository.findAll();
+}
+
+export async function getPendingPayment(userId: string) {
+    return await subscriptionRepository.findPendingPaymentByUserId(userId);
 }

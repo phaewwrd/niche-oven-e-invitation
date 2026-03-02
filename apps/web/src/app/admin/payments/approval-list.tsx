@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { approvePayment, rejectPayment } from "@/app/actions/admin";
 import { toast } from "sonner";
 import { Check, X, ExternalLink, User } from "lucide-react";
+import Image from "next/image";
 
 export default function PaymentApprovalList({ initialPayments }: { initialPayments: any[] }) {
     const [payments, setPayments] = useState(initialPayments);
@@ -39,7 +40,7 @@ export default function PaymentApprovalList({ initialPayments }: { initialPaymen
                 <div key={p.id} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row gap-8 items-start hover:border-primary transition-colors">
                     {/* Slip Image */}
                     <div className="w-full md:w-32 aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden border border-gray-100 flex-shrink-0 relative group">
-                        <img src={p.slipUrl} alt="Slip" className="w-full h-full object-cover" />
+                        <Image src={p.slipUrl} alt="Slip" className="w-full h-full object-cover" />
                         <a href={p.slipUrl} target="_blank" rel="noreferrer" className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
                             <ExternalLink className="w-4 h-4" /> Open
                         </a>
@@ -56,8 +57,8 @@ export default function PaymentApprovalList({ initialPayments }: { initialPaymen
                                 <p className="text-sm text-gray-500">{p.user?.email}</p>
                             </div>
                             <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest ${p.status === 'approved' ? 'bg-green-100 text-green-700' :
-                                    p.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                                        'bg-yellow-100 text-yellow-700'
+                                p.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                                    'bg-yellow-100 text-yellow-700'
                                 }`}>
                                 {p.status}
                             </div>

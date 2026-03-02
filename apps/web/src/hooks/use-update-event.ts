@@ -9,16 +9,22 @@ export function useUpdateEvent(eventId: string, userId: string) {
 
     return useMutation({
         mutationFn: async (data: any) => {
-            const result = await updateEventAction(eventId, userId, data);
-            if (!result.success) {
-                throw new Error(result.error);
+            const result = await updateEventAction({ eventId, data });
+            if (result?.serverError) {
+                throw new Error(result.serverError);
             }
-            return result;
+            if (result?.validationErrors) {
+                throw new Error("Validation failed");
+            }
+            return result?.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             toast.success("Event updated successfully!");
             queryClient.invalidateQueries({ queryKey: ["event", eventId] });
-            router.push("/dashboard");
+            if (data?.slug) {
+                window.open(`/invitation/${data.slug}`, "_blank");
+            }
+            router.push("/manage");
         },
         onError: (error: any) => {
             toast.error(error.message || "Failed to update event");

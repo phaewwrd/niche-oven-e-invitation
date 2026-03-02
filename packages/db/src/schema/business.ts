@@ -12,6 +12,8 @@ export const plan = pgTable("plan", {
     allowSlug: boolean("allow_slug").notNull(),
     allowQuote: boolean("allow_quote").notNull(),
     allowMaps: boolean("allow_maps").notNull(),
+    maxDressCodeColors: integer("max_dress_code_colors").default(3).notNull(),
+    allowRsvp: boolean("allow_rsvp").default(false).notNull(),
 });
 export type Plan = typeof plan.$inferSelect;
 
@@ -29,11 +31,15 @@ export type UserSubscription = typeof userSubscription.$inferSelect;
 export const theme = pgTable("theme", {
     id: text("id").primaryKey(),
     title: text("title").notNull(),
+    slug: text("slug").unique().notNull().default("classic"),
     primaryColor: text("primary_color").notNull(),
     secondaryColor: text("secondary_color").notNull(),
     accentColor: text("accent_color").notNull(),
     backgroundColor: text("background_color").notNull(),
     fontFamily: text("font_family").notNull(),
+    previewImageUrl: text("preview_image_url"),
+    image1Url: text("image1_url"),
+    image2Url: text("image2_url"),
     showDate: boolean("show_date").default(true).notNull(),
     showSchedule: boolean("show_schedule").default(true).notNull(),
     showQuote: boolean("show_quote").default(true).notNull(),
@@ -55,9 +61,13 @@ export const event = pgTable("event", {
     image2Url: text("image2_url"),
     eventDate: timestamp("event_date").notNull(),
     locationText: text("location_text"),
+    locationProvince: text("location_province"),
+    locationCountry: text("location_country"),
     googleMapsUrl: text("google_maps_url"),
     quote: text("quote"),
+    dressCodeColors: text("dress_code_colors").array(),
     slug: text("slug").unique().notNull(),
+    collectRsvp: boolean("collect_rsvp").default(false).notNull(),
     expiresAt: timestamp("expires_at").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
@@ -84,3 +94,25 @@ export const payment = pgTable("payment", {
     createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 export type Payment = typeof payment.$inferSelect;
+
+// Site Settings
+export const siteConfig = pgTable("site_config", {
+    key: text("key").primaryKey(), // e.g., 'hero_image_url'
+    value: text("value").notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+});
+export type SiteConfig = typeof siteConfig.$inferSelect;
+
+// RSVP Collection
+export const rsvp = pgTable("rsvp", {
+    id: text("id").primaryKey(),
+    eventId: text("event_id").notNull().references(() => event.id, { onDelete: 'cascade' }),
+    guestName: text("guest_name").notNull(),
+    email: text("email"),
+    phone: text("phone"),
+    totalGuests: integer("total_guests").default(1).notNull(),
+    isAttending: boolean("is_attending").default(true).notNull(),
+    message: text("message"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+export type Rsvp = typeof rsvp.$inferSelect;

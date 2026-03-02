@@ -1,0 +1,13 @@
+@keyframes zoomOut {
+    from {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.zoomOut {
+    animation: zoomOut 1.5s ease forwards;
+}

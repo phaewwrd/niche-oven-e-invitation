@@ -1,29 +1,21 @@
 "use server";
 
 import { db } from "@niche-e-invitation/db";
-import { payment } from "@niche-e-invitation/db/schema";
-import { uploadToCloudinary } from "@/lib/cloudinary";
+import { payment } from "@niche-e-invitation/db/schema/business";
 import { revalidatePath } from "next/cache";
 
-export async function submitPayment(formData: FormData) {
-    const file = formData.get("file") as File;
-    const amountStr = formData.get("amount") as string;
-    const userId = formData.get("userId") as string;
-
-    if (!file || !amountStr || !userId) {
+export async function submitPayment(data: { slipUrl: string, amount: number, userId: string }) {
+    if (!data.slipUrl || !data.amount || !data.userId) {
         return { success: false, error: "Missing required fields" };
     }
 
     try {
-        // 1. Upload to Cloudinary
-        const uploadResult = await uploadToCloudinary(file, "payment-slips");
-
-        // 2. Save to database
+        // 2. Save directly to database (client has already uploaded the slip)
         await db.insert(payment).values({
             id: `pay_${Date.now()}`,
-            userId: userId,
-            slipUrl: uploadResult.url,
-            amount: parseInt(amountStr),
+            userId: data.userId,
+            slipUrl: data.slipUrl,
+            amount: data.amount,
             status: "pending",
         });
 
