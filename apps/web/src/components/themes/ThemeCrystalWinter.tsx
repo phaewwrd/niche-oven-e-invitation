@@ -81,11 +81,7 @@ export default function ThemeCrystalWinter({ event, theme, schedules, isExpired 
                         <span className="block">{event.brideName}</span>
                     </h1>
 
-                    <div className="mt-12 space-y-4">
-                        <p className="text-xl font-light tracking-[0.3em]">{formatDate(event.eventDate).split(',')[1]}</p>
-                        <div className="h-px w-24 bg-current mx-auto opacity-20" />
-                        <p className="text-sm uppercase tracking-[0.6em] opacity-60">The Enchantment Begins</p>
-                    </div>
+
                 </div>
 
                 {(event.image1Url || theme.image1Url) && (
@@ -131,6 +127,11 @@ export default function ThemeCrystalWinter({ event, theme, schedules, isExpired 
                         )}
                     </div>
 
+                    <div className="mt-12 space-y-4">
+                        <p className="text-xl font-light tracking-[0.3em]">{formatDate(event.eventDate).split(',')[1]}</p>
+                        <div className="h-px w-24 bg-current mx-auto opacity-20" />
+                        <p className="text-sm uppercase tracking-[0.6em] opacity-60">The Enchantment Begins</p>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12">
                         <div className="space-y-4 p-8 rounded-3xl bg-blue-50/50 border border-current/5 backdrop-blur-sm">
                             <h3 className="text-sm uppercase tracking-[0.4em] opacity-50">When</h3>

@@ -3,6 +3,8 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eventSchema, type EventSchema } from "@/schemas/event";
+import { Controller } from "react-hook-form";
+import { DateTimePicker } from "@/components/ui/datetime-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -117,7 +119,17 @@ export default function CreateEventForm({ userId, themes, subscription, initialT
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                     <div className="space-y-3">
                         <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Magic Date & Time</Label>
-                        <Input type="datetime-local" {...register("eventDate")} className="py-6 sm:py-7 rounded-2xl border-border bg-white/50 focus:ring-2 focus:ring-secondary/20 transition-all text-lg" />
+                        <Controller
+                            control={control}
+                            name="eventDate"
+                            render={({ field }: { field: any }) => (
+                                <DateTimePicker
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    placeholder="Select magic date & time"
+                                />
+                            )}
+                        />
                         {errors.eventDate && <p className="text-destructive text-xs">{errors.eventDate.message}</p>}
                     </div>
                 </div>
