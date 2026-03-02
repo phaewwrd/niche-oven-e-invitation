@@ -5,6 +5,7 @@ import { MapPin, Heart, Clock, Camera, Utensils, Music, GlassWater, Gift } from 
 import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import '../../ThemePearlMinimal.module.css';
 
 interface ThemeProps {
     event: Event;
@@ -81,67 +82,7 @@ export default function ThemePearlMinimal({ event, theme, schedules, isExpired }
                 fontFamily: `'Cormorant Garamond', serif`
             }}
         >
-            <style jsx global>{`
-                @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Great+Vibes&display=swap');
 
-                .hero-image-wrapper {
-                    position: relative;
-                }
-
-                /* Decorative corner lines on the portrait frame */
-                .portrait-frame::before,
-                .portrait-frame::after {
-                    content: '';
-                    position: absolute;
-                    width: 28px;
-                    height: 28px;
-                    z-index: 10;
-                    pointer-events: none;
-                }
-                .portrait-frame::before {
-                    top: -6px;
-                    left: -6px;
-                    border-top: 1px solid rgba(74,74,74,0.25);
-                    border-left: 1px solid rgba(74,74,74,0.25);
-                }
-                .portrait-frame::after {
-                    bottom: -6px;
-                    right: -6px;
-                    border-bottom: 1px solid rgba(74,74,74,0.25);
-                    border-right: 1px solid rgba(74,74,74,0.25);
-                }
-
-                .detail-image-wrapper::before,
-                .detail-image-wrapper::after {
-                    content: '';
-                    position: absolute;
-                    width: 36px;
-                    height: 36px;
-                    z-index: 10;
-                    pointer-events: none;
-                }
-                .detail-image-wrapper::before {
-                    top: -8px;
-                    left: -8px;
-                    border-top: 1px solid rgba(74,74,74,0.2);
-                    border-left: 1px solid rgba(74,74,74,0.2);
-                }
-                .detail-image-wrapper::after {
-                    bottom: -8px;
-                    right: -8px;
-                    border-bottom: 1px solid rgba(74,74,74,0.2);
-                    border-right: 1px solid rgba(74,74,74,0.2);
-                }
-
-                @keyframes fadeUp {
-                    from { opacity: 0; transform: translateY(16px); }
-                    to   { opacity: 1; transform: translateY(0); }
-                }
-                .fade-up { animation: fadeUp 0.9s ease both; }
-                .fade-up-delay-1 { animation-delay: 0.15s; }
-                .fade-up-delay-2 { animation-delay: 0.3s; }
-                .fade-up-delay-3 { animation-delay: 0.45s; }
-            `}</style>
 
             {isExpired && (
                 <div className="bg-neutral-800 text-white py-2 text-center text-xs tracking-widest uppercase">

@@ -5,7 +5,7 @@ import { auth } from "@niche-e-invitation/auth/auth";
 import { getSiteConfig } from "@/app/actions/site-config";
 import { AdminHeroImageUploader } from "@/components/admin-hero-image-uploader";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Calendar, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 
 export default async function Home() {
     const session = await auth.api.getSession({
@@ -36,19 +36,19 @@ export default async function Home() {
                         <Sparkles className="w-4 h-4" />
                         Digital Invitations for Modern Couples
                     </div>
-                    <h1 className="text-6xl md:text-8xl font-serif font-black tracking-tighter leading-none italic">
+                    <h1 className="text-4xl sm:text-5xl md:text-8xl font-serif font-black tracking-tighter leading-none italic">
                         NICHE <span className="text-secondary">E</span>
                     </h1>
-                    <p className="text-xl md:text-2xl text-white/70 font-medium max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-lg md:text-2xl text-white/70 font-medium max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
                         Create breathtaking digital invitations that capture the magic of your love story in minutes.
                     </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300">
                     <Link href="/manage/events/new/theme" className="w-full sm:w-auto">
-                        <Button className="w-full sm:w-auto py-8 px-10 text-xl font-black rounded-2xl bg-secondary hover:brightness-110 text-primary shadow-2xl shadow-secondary/40 border-none transform hover:scale-105 active:scale-95 transition-all">
+                        <Button className="w-full sm:w-auto py-6 sm:py-8 px-8 sm:px-10 text-lg sm:text-xl font-black rounded-2xl bg-secondary hover:brightness-110 text-primary shadow-2xl shadow-secondary/40 border-none transform hover:scale-105 active:scale-95 transition-all">
                             Start Designing
-                            <ArrowRight className="ml-2 w-6 h-6" />
+                            <ArrowRight className="ml-2 w-5 h-5 sm:w-6 sm:h-6" />
                         </Button>
                     </Link>
 
@@ -71,11 +71,11 @@ export default async function Home() {
                 </div> */}
 
                 {/* Admin Uploader Tool */}
-                {isAdmin && (
+                {/* {isAdmin && (
                     <div className="fixed bottom-8 right-8 z-50">
                         <AdminHeroImageUploader initialUrl={heroImageUrl} />
                     </div>
-                )}
+                )} */}
             </div>
 
             {/* Decorative bottom blur */}

@@ -12,7 +12,7 @@ export default function Header() {
           <div className="bg-secondary p-1.5 rounded-lg shadow-lg shadow-secondary/20">
             <Sparkles className="w-5 h-5 text-primary" />
           </div>
-          <span className="text-2xl font-serif font-black tracking-tighter italic">
+          <span className="text-xl sm:text-2xl font-serif font-black tracking-tighter italic">
             NICHE <span className="text-secondary">E</span>
           </span>
         </Link>

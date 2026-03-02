@@ -32,14 +32,14 @@ export default async function EventRsvpPage({ params }: { params: { eventId: str
 
     return (
         <div className="container mx-auto p-6 max-w-5xl animate-in fade-in duration-1000">
-            <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-4xl font-black mb-2 tracking-tight">Guest Intelligence</h1>
-                    <p className="text-gray-500 text-lg italic font-serif">
+                    <h1 className="text-2xl sm:text-4xl font-black mb-2 tracking-tight">Guest Intelligence</h1>
+                    <p className="text-gray-500 text-sm sm:text-lg italic font-serif">
                         RSVP responses for <span className="text-primary font-serif font-black">{event.groomName} & {event.brideName}</span>
                     </p>
                 </div>
-                <a href="/manage" className="text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-all">
+                <a href="/manage" className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-all">
                     ← Back to Dashboard
                 </a>
             </div>

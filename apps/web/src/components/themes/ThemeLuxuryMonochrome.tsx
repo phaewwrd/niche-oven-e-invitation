@@ -5,6 +5,12 @@ import { Heart } from "lucide-react";
 import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Playfair_Display } from "next/font/google"
+
+const playfair = Playfair_Display({
+    subsets: ["latin"],
+    variable: "--font-playfair",
+})
 
 interface ThemeProps {
     event: Event;
@@ -57,15 +63,11 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
             style={{
                 ...themeVars,
                 backgroundColor: "#000000",
-                fontFamily: `'Playfair Display', 'Bodoni MT', serif`,
+                fontFamily: playfair.className,
                 color: "#ffffff",
             }}
-            className="min-h-screen"
+            className="min-h-screen zoomOut"
         >
-            {/* Import Google Fonts */}
-            <style jsx global>{`
-                @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-            `}</style>
 
             {isExpired && (
                 <div className="sticky top-0 z-50 py-3 px-6 text-center text-sm font-medium bg-white/10 backdrop-blur-md text-white border-b border-white/10">
@@ -170,9 +172,9 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
             </section>
 
             {/* 5. IMAGE BREAK */}
-            <section className="h-[80vh] w-full bg-black">
+            {/* <section className="h-[80vh] w-full bg-black">
                 <Image src={event.image2Url || theme.image2Url || ""} fill className="w-full h-full object-cover grayscale opacity-80" alt="Detail" />
-            </section>
+            </section> */}
 
             {/* 6. DRESS CODE */}
             {event.dressCodeColors && event.dressCodeColors.length > 0 && (
@@ -202,10 +204,10 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-2xl sm:text-3xl font-serif font-black italic uppercase mb-10 sm:mb-12 tracking-widest">DLYA VDOHNOVENIYA</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12">
-                        <div className="aspect-[3/4] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl transform sm:-rotate-2 hover:rotate-0 transition-transform duration-500">
+                        <div className="relative aspect-[3/4] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl transform sm:-rotate-2 hover:rotate-0 transition-transform duration-500">
                             <Image alt="Inspiration 1" fill src={event.image1Url || theme.image1Url || ""} className="w-full h-full object-cover grayscale" />
                         </div>
-                        <div className="aspect-[3/4] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl transform sm:rotate-2 hover:rotate-0 transition-transform duration-500 sm:mt-12">
+                        <div className="relative aspect-[3/4] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl transform sm:rotate-2 hover:rotate-0 transition-transform duration-500 sm:mt-12">
                             <Image alt="Inspiration 2" fill src={event.image2Url || theme.image2Url || ""} className="w-full h-full object-cover grayscale" />
                         </div>
                     </div>
@@ -244,12 +246,7 @@ export default function ThemeLuxuryMonochrome({ event, theme, schedules, isExpir
                 </div>
             </footer>
 
-            <style jsx>{`
-                @keyframes zoomOut {
-                    from { transform: scale(1.1); }
-                    to { transform: scale(1); }
-                }
-            `}</style>
+
         </div>
     );
 }

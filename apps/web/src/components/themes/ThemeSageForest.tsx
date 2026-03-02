@@ -5,6 +5,13 @@ import { MapPin, Heart, Calendar as CalendarIcon, Clock } from "lucide-react";
 import { RsvpForm } from "@/components/rsvp-form";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Cormorant_Garamond } from "next/font/google"
+
+export const cormorant = Cormorant_Garamond({
+    subsets: ["latin"],
+    weight: ["300", "400", "700"],
+    display: "swap",
+})
 
 interface ThemeProps {
     event: Event;
@@ -145,12 +152,9 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             style={{
                 backgroundColor: "#e8e5dc",
                 color: "#2d4030",
-                fontFamily: `'Cormorant Garamond', 'Times New Roman', serif`
+                fontFamily: cormorant.style.fontFamily
             }}
         >
-            <style jsx global>{`
-                @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-            `}</style>
 
             {isExpired && (
                 <div className="sticky top-0 z-50 py-3 px-6 text-center text-sm font-medium bg-[#2d4030] text-white">
@@ -224,11 +228,11 @@ export default function ThemeSageForest({ event, theme, schedules, isExpired }: 
             </section>
 
             <section className=" px-6 sm:px-8 text-center">
-                 {/* {event.image1Url && ( */}
-                    <div className="aspect-3/4 relative">
-                        <Image src={event.image2Url || theme.image2Url || ""} fill className="w-full h-full object-cover brightness-90" alt="Couple" />
-                        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#2d4030]/80" />
-                    </div>
+                {/* {event.image1Url && ( */}
+                <div className="aspect-3/4 relative">
+                    <Image src={event.image2Url || theme.image2Url || ""} fill className="w-full h-full object-cover brightness-90" alt="Couple" />
+                    <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#2d4030]/80" />
+                </div>
                 <div className="max-w-md mx-auto mt-5">
                     <p className="text-base sm:text-lg leading-relaxed opacity-80 italic mb-10">
                         We have planned a wonderful day filled with love, laughter, and unforgettable moments. Here's a glimpse of our schedule:

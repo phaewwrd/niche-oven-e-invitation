@@ -21,14 +21,14 @@ export default async function AdminThemesPage() {
     });
 
     return (
-        <div className="container mx-auto p-6 max-w-7xl pb-20">
-            <div className="flex items-center justify-between mb-12">
+        <div className="container mx-auto p-4 sm:p-6 max-w-7xl pb-20">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 sm:mb-12">
                 <div>
-                    <h1 className="text-4xl font-black tracking-tight">Manage Themes</h1>
-                    <p className="text-muted-foreground text-lg">Edit theme preview images and settings</p>
+                    <h1 className="text-2xl sm:text-4xl font-black tracking-tight">Manage Themes</h1>
+                    <p className="text-muted-foreground text-sm sm:text-lg">Edit theme preview images and settings</p>
                 </div>
-                <Link href="/admin/themes/new">
-                    <Button className="gap-2">
+                <Link href="/admin/themes/new" className="w-full sm:w-auto">
+                    <Button className="w-full sm:w-auto gap-2 py-6 sm:py-2">
                         <Plus className="w-4 h-4" />
                         New Theme
                     </Button>
@@ -43,12 +43,15 @@ export default async function AdminThemesPage() {
                     >
                         <div className="aspect-[3/4] rounded-xl overflow-hidden bg-muted relative">
                             {theme.previewImageUrl ? (
-                                <Image
-                                    src={theme.previewImageUrl}
-                                    alt={theme.title}
-                                    fill
-                                    className="object-cover"
-                                />
+                                <div className="absolute inset-0 overflow-y-auto">
+                                    <Image
+                                        src={theme.previewImageUrl}
+                                        alt={theme.title}
+                                        width={600}
+                                        height={1200}
+                                        className="w-full h-auto object-top"
+                                    />
+                                </div>
                             ) : (
                                 <div
                                     className="w-full h-full p-6 flex flex-col"

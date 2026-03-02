@@ -34,8 +34,8 @@ export default function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" className="border-border rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-secondary/5 h-10 px-4" />}>
-        {session.user.name}
+      <DropdownMenuTrigger render={<Button variant="outline" className="border-border rounded-xl font-bold text-[10px] sm:text-xs uppercase tracking-widest hover:bg-secondary/5 h-10 px-4" />}>
+        <span className="truncate max-w-[80px] sm:max-w-none">{session.user.name}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white/80 backdrop-blur-xl border border-border rounded-2xl p-2 shadow-2xl shadow-primary/5 min-w-[200px]">
         <DropdownMenuGroup className="space-y-1">

@@ -29,10 +29,10 @@ export default async function CreateEventPage({ searchParams }: { searchParams: 
     }
 
     return (
-        <div className="container mx-auto p-6 max-w-4xl">
+        <div className="container mx-auto p-4 sm:p-6 max-w-4xl">
             <div className="mb-8">
-                <h1 className="text-4xl font-black mb-2 tracking-tight">Finalize Details</h1>
-                <p className="text-gray-500 text-lg">You selected <span className="text-secondary font-black italic">{selectedTheme.title}</span>. Now tell us about your day.</p>
+                <h1 className="text-2xl sm:text-4xl font-black mb-2 tracking-tight">Finalize Details</h1>
+                <p className="text-gray-500 text-sm sm:text-lg">You selected <span className="text-secondary font-black italic">{selectedTheme.title}</span>. Now tell us about your day.</p>
             </div>
 
             <CreateEventForm

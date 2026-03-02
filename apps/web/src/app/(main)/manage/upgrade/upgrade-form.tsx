@@ -106,19 +106,19 @@ export default function UpgradeForm({ userId, amount }: { userId: string; amount
                     />
                     <label
                         htmlFor="slip"
-                        className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-gray-300 rounded-xl hover:border-primary transition-colors cursor-pointer bg-white group"
+                        className="flex flex-col items-center justify-center p-6 sm:p-8 border-2 border-dashed border-gray-300 rounded-xl hover:border-primary transition-colors cursor-pointer bg-white group"
                     >
                         {file ? (
                             <div className="text-center">
-                                <CheckCircle2 className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                                <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mx-auto mb-2" />
                                 <p className="text-sm font-medium text-gray-900">{file.name}</p>
-                                <p className="text-xs text-gray-500">Click to change file</p>
+                                <p className="text-[10px] sm:text-xs text-gray-500">Click to change file</p>
                             </div>
                         ) : (
                             <div className="text-center">
-                                <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2 group-hover:text-primary transition-colors" />
+                                <Upload className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 mx-auto mb-2 group-hover:text-primary transition-colors" />
                                 <p className="text-sm font-medium text-gray-900">Choose a file or drag and drop</p>
-                                <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
+                                <p className="text-[10px] sm:text-xs text-gray-500">PNG, JPG up to 5MB</p>
                             </div>
                         )}
                     </label>
@@ -127,7 +127,7 @@ export default function UpgradeForm({ userId, amount }: { userId: string; amount
 
             <Button
                 type="submit"
-                className="w-full py-6 text-lg font-bold rounded-xl shadow-lg shadow-primary/20"
+                className="w-full py-5 sm:py-6 text-base sm:text-lg font-bold rounded-xl shadow-lg shadow-primary/20"
                 disabled={!file || isUploading}
             >
                 {isUploading ? (

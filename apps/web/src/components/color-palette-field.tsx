@@ -30,13 +30,13 @@ export function ColorPaletteField({ colors, onChange, maxColors, isPaid }: Color
     };
 
     return (
-        <section className="bg-white/80 backdrop-blur-sm p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
-            <div className="flex items-center justify-between mb-2">
+        <section className="bg-white/80 backdrop-blur-sm p-6 sm:p-10 rounded-3xl border border-border shadow-2xl shadow-primary/5 space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
                 <div className="flex items-center gap-3">
                     <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
                         <Palette className="w-5 h-5" />
                     </div>
-                    <h2 className="text-2xl font-serif font-black italic">Dress Code Palette</h2>
+                    <h2 className="text-xl sm:text-2xl font-serif font-black italic">Dress Code Palette</h2>
                 </div>
                 <Button
                     type="button"

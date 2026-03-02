@@ -22,10 +22,10 @@ export default async function AdminPaymentsPage() {
     });
 
     return (
-        <div className="container mx-auto p-6 max-w-6xl">
-            <div className="mb-10">
-                <h1 className="text-4xl font-black mb-2 tracking-tight">Payment Control</h1>
-                <p className="text-gray-500">Verify and approve subscription upgrade requests.</p>
+        <div className="container mx-auto p-4 sm:p-6 max-w-6xl">
+            <div className="mb-8 sm:mb-10">
+                <h1 className="text-2xl sm:text-4xl font-black mb-2 tracking-tight">Payment Control</h1>
+                <p className="text-gray-500 text-sm sm:text-base">Verify and approve subscription upgrade requests.</p>
             </div>
 
             {payments.length === 0 ? (

@@ -82,19 +82,19 @@ export default function CreateThemeForm() {
                 Return to Workspace
             </Link>
 
-            <div className="mb-14 text-center">
-                <h1 className="text-5xl md:text-7xl font-serif font-black italic mb-4 leading-none">Architecting <span className="text-secondary text-5xl md:text-7xl leading-none">Aesthetics</span></h1>
-                <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-xl mx-auto italic">Define the visual DNA that will encapsulate your future invitation collections.</p>
+            <div className="mb-10 sm:mb-14 text-center px-4 sm:px-0">
+                <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-black italic mb-4 leading-none">Architecting <span className="text-secondary text-3xl sm:text-5xl md:text-7xl leading-none">Aesthetics</span></h1>
+                <p className="text-muted-foreground font-medium text-sm sm:text-lg leading-relaxed max-w-xl mx-auto italic">Define the visual DNA that will encapsulate your future invitation collections.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-12">
                 {/* Identity Section */}
-                <section className="bg-white/80 backdrop-blur-sm p-10 rounded-[2.5rem] border border-border shadow-2xl shadow-primary/5 space-y-8">
+                <section className="bg-white/80 backdrop-blur-sm p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] border border-border shadow-2xl shadow-primary/5 space-y-8">
                     <div className="flex items-center gap-3 mb-2">
                         <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
                             <Sparkles className="w-5 h-5" />
                         </div>
-                        <h2 className="text-2xl font-serif font-black italic">Theme Core</h2>
+                        <h2 className="text-xl sm:text-2xl font-serif font-black italic">Theme Core</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-3">
@@ -122,12 +122,12 @@ export default function CreateThemeForm() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     {/* Visual DNA Section */}
-                    <section className="bg-white/80 backdrop-blur-sm p-10 rounded-[2.5rem] border border-border shadow-2xl shadow-primary/5 space-y-10">
+                    <section className="bg-white/80 backdrop-blur-sm p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] border border-border shadow-2xl shadow-primary/5 space-y-10">
                         <div className="flex items-center gap-3 mb-2">
                             <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
                                 <Palette className="w-5 h-5" />
                             </div>
-                            <h2 className="text-2xl font-serif font-black italic">Visual DNA</h2>
+                            <h2 className="text-xl sm:text-2xl font-serif font-black italic">Visual DNA</h2>
                         </div>
 
                         <div className="grid grid-cols-1 gap-8">
@@ -151,12 +151,12 @@ export default function CreateThemeForm() {
                     </section>
 
                     {/* Structure Section */}
-                    <section className="bg-white/80 backdrop-blur-sm p-10 rounded-[2.5rem] border border-border shadow-2xl shadow-primary/5 space-y-10">
+                    <section className="bg-white/80 backdrop-blur-sm p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] border border-border shadow-2xl shadow-primary/5 space-y-10">
                         <div className="flex items-center gap-3 mb-2">
                             <div className="bg-secondary/20 p-2.5 rounded-xl text-secondary shadow-lg shadow-secondary/10">
                                 <Layout className="w-5 h-5" />
                             </div>
-                            <h2 className="text-2xl font-serif font-black italic">Architecture</h2>
+                            <h2 className="text-xl sm:text-2xl font-serif font-black italic">Architecture</h2>
                         </div>
 
                         <div className="space-y-6">
@@ -184,11 +184,11 @@ export default function CreateThemeForm() {
                 </div>
 
                 {/* Submit Bar */}
-                <div className="sticky bottom-10 left-0 right-0 pt-8 z-50">
+                <div className="sticky bottom-6 sm:bottom-10 left-0 right-0 pt-8 z-50 px-4 sm:px-0">
                     <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full py-10 text-2xl font-black rounded-[2rem] bg-primary text-primary-foreground shadow-2xl shadow-primary/20 transform active:scale-[0.98] hover:brightness-110 transition-all border-4 border-white"
+                        className="w-full py-8 sm:py-10 text-xl sm:text-2xl font-black rounded-[1.5rem] sm:rounded-[2rem] bg-primary text-primary-foreground shadow-2xl shadow-primary/20 transform active:scale-[0.98] hover:brightness-110 transition-all border-2 sm:border-4 border-white"
                     >
                         {isSubmitting ? (
                             <div className="flex items-center gap-4">
